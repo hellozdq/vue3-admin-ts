@@ -153,15 +153,20 @@ server: {
 ### 接下来实现 layout(主要是侧边栏和选项卡)
 
 1. 在views 里建文件 layout
-    layout 里建 Header\、Sidebar\ 、index.vue 、AppMain 
-    + Header 头部
+    layout 里建 HeaderView\、Sidebar\ 、index.vue 、AppMain 
+    + HeaderView 头部
+     - HeadTags 头部导航标签
+     - index 所有头部的信息
     + Siderbar 侧边栏
+        - index
     + AppMain 中间内容
     + index.vue  组合
 
 2. 引入elementUI
    [element-plus](https://element-plus.gitee.io/#/zh-CN/component/quickstart)
 
+
+3. 
 
 
 

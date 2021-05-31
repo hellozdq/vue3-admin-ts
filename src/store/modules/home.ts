@@ -1,13 +1,13 @@
-type stateTy = {
+type state = {
     name:string
 }
 
-const state:stateTy = {
+const state:state = {
     name:'storeName'
 }
 
 const mutations = {
-  SET_NAME: (state:stateTy,name:string) => {
+  SET_NAME: (state:state,name:string) => {
       state.name = name
   }
 }

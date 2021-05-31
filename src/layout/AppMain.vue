@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="main">
     <router-view v-slot="{ Component }">
         <transition>
             <component :is="Component" />
@@ -21,6 +21,9 @@ export default defineComponent ({
 })
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.main{
+  background: #fff;
+  height: 100%;
+}
 </style>

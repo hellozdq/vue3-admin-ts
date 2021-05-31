@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div>{{name}}</div>
+        <!-- <div>{{name}}</div>
         <button @click="setStoreName('name2')">按钮</button>
-        <el-button>qewe</el-button>
+        <el-button>qewe</el-button> -->
     </div>
 </template>
 
