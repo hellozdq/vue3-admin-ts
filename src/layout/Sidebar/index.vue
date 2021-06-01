@@ -21,18 +21,6 @@
         <el-menu-item index="1-4-1">选项1</el-menu-item>
       </el-submenu>
     </el-submenu>
-    <el-menu-item index="2">
-      <i class="el-icon-menu"></i>
-      <template #title>导航二</template>
-    </el-menu-item>
-    <el-menu-item index="3" disabled>
-      <i class="el-icon-document"></i>
-      <template #title>导航三</template>
-    </el-menu-item>
-    <el-menu-item index="4">
-      <i class="el-icon-setting"></i>
-      <template #title>导航四</template>
-    </el-menu-item>
   </el-menu>
 </div>
 
@@ -40,14 +28,24 @@
 
 <script lang="ts">
 import { defineComponent, computed } from "vue";
+import { useRoute } from "vue-router"
 import { useStore } from "vuex"
+import router from '../../router/index'
+// import router from '../../router/index.ts'
+// import router from "@/router/index"
+// import router from "@/router/index.ts"
+console.log("router")
+console.log(router)
 
   export default defineComponent({
     setup(){
         const store = useStore();
+        const route = useRoute();
         const isCollapse = computed(() => {
             return  store.state.layout.isCollapse;
         })
+
+
         const handleOpen = (key, keyPath) => {
             console.log(key, keyPath);
         }

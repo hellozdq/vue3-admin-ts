@@ -147,6 +147,13 @@ server: {
 }
 ```
 
+### 问题
+```
+An import path cannot end with a '.ts' extension.
+ 
+修改vite.config.ts
+resolve.extensions
+```
 
 
 

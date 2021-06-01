@@ -15,7 +15,8 @@ export default defineConfig({
   resolve: {
     alias:{
       '@':resolve('src'),
-    }
+    },
+    extensions:['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
   },
   plugins: [vue()]
 })
