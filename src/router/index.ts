@@ -5,7 +5,32 @@ export default createRouter({
     routes: [
         {
             path: '/',
-            component:() => import('../views/home/index.vue')
+            component:() => import('../views/home/index.vue'),
+            name:"Home",
+            meta:{
+                title: "主页",
+                hidden: false
+            },
+        },
+        {
+            path: '/home',
+            component:() => import('../views/home/index.vue'),
+            name:"Home1",
+            meta:{
+                title: "1",
+                hidden: false
+            },
+            children:[
+                {
+                    path: 'about',
+                    component:() => import('../views/home/index.vue'),
+                    name:"About",
+                    meta:{
+                        title: "1-2",
+                        hidden: false
+                    },
+                },
+            ]
         }
     ]
 })
