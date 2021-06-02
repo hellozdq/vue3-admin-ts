@@ -36,7 +36,6 @@ export default defineComponent({
             return  store.state.layout.isCollapse;
         })
         const handleCollapse = (data) => {
-            console.log(data)
             store.dispatch("layout/set_isCollapse",data);
         }
         return {

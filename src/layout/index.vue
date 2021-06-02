@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { defineComponent, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute,useRouter } from "vue-router";
 import { useStore } from "vuex";
 import AppMain from './AppMain.vue'
 import Sidebar from './Sidebar/index.vue'
@@ -26,8 +26,11 @@ export default defineComponent ({
     },
     setup(){
         const route = useRoute();
+        const router = useRouter();
         const store = useStore();
-        watch(() => route.path,(newRoute,oldRoute)=>{
+        store.dispatch("layout/add_tagViews",router.resolve("/"));
+        // 监听路由变化 每次变化添加一次tag;
+        watch(() => route.path,()=>{
             store.dispatch("layout/add_tagViews",route);
         })  
     }

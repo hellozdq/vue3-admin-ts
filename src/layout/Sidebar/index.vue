@@ -4,9 +4,8 @@
   <div class="logo">logo</div>
   <el-menu background-color="#545c64"
       text-color="#fff"
-      active-text-color="#ffd04b"
-      :default-active="defalutActive"
-      :active="activeId"
+      active-text-color="#409EFF"
+      :default-active="route.path"
       class="el-menu-vertical-demo menu" 
       :collapse="isCollapse"
       :unique-opened="true"
@@ -18,18 +17,10 @@
 </template>
 
 <script lang="ts">
-// const path = require("path");
-
-// import path from 'path';
-// console.log(path.resolve("/a","b"));
-
-import { defineComponent, computed, ref } from "vue";
+import { defineComponent, computed } from "vue";
 import { useRoute } from "vue-router"
 import { useStore } from "vuex"
-// import router from '../../router/index'
-// import router from '../../router/index.ts'
 import router from "@/router/index"
-// import router from "@/router/index.ts"
 
 import SidebarItem from './SidebarItem.vue'
 
@@ -40,29 +31,16 @@ export default defineComponent({
   setup(){
       const store = useStore();
       const route = useRoute();
+      // 动态获取是否折叠
       const isCollapse = computed(() => {
           return  store.state.layout.isCollapse;
       })
       
-      // setTimeout(function(){
-
-      // })
-      const defalutActive = ref("/about");
-      const activeId = ref("/about")
-      
+      // 获取菜单路由
       const menus = router.options.routes;
-      console.log(menus)
-
-
-      const handleOpen = (key, keyPath) => {
-          console.log(key, keyPath);
-      }
-      const handleClose = (key, keyPath) =>{
-          console.log(key, keyPath);
-      }
 
       
-      return {isCollapse, handleOpen, handleClose, menus, defalutActive, activeId}
+      return {isCollapse, menus, route}
   }
 })
 </script>

@@ -173,8 +173,12 @@ resolve.extensions
    [element-plus](https://element-plus.gitee.io/#/zh-CN/component/quickstart)
 
 
-3. 
+3. 引入相关的组件 主要是侧边栏的和头部导航的，
+   进行处理各自点击路由跳转，统一在layout/index.vue 中监听route的变化进行选中的路由添加到vuex 中的导航页面tabViews，
+   在vuex中进行选中的页面进行添加删除
 
+
+添加了 path-browserify 使用path 没成功
 
 
 
