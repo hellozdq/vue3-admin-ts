@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "element-plus": "^1.0.2-beta.45",
+    "path-browserify": "^1.0.1",
     "vue": "^3.0.5",
     "vuex": "^4.0.1"
   },

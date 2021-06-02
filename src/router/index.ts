@@ -22,7 +22,7 @@ export default createRouter({
             },
             children:[
                 {
-                    path: 'about',
+                    path: '/about',
                     component:() => import('../views/home/index.vue'),
                     name:"About",
                     meta:{

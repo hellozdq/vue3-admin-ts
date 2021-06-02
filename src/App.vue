@@ -13,9 +13,11 @@ export default defineComponent({
 </script>
 
 <style>
-html,body{
+html,body,a,p{
   height: 100%;
   padding: 0;
   margin: 0;
+  list-style: none;
+  text-decoration: none;
 }
 </style>

@@ -10,8 +10,10 @@
     </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script lang="ts">
+import { defineComponent, watch } from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 import AppMain from './AppMain.vue'
 import Sidebar from './Sidebar/index.vue'
 import HeaderView from './HeaderView/index.vue'
@@ -23,7 +25,11 @@ export default defineComponent ({
         HeaderView
     },
     setup(){
-        
+        const route = useRoute();
+        const store = useStore();
+        watch(() => route.path,(newRoute,oldRoute)=>{
+            store.dispatch("layout/add_tagViews",route);
+        })  
     }
 })
 </script>
