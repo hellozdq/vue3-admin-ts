@@ -181,11 +181,20 @@ resolve.extensions
    使用vuex 保存组件页面缓存
    添加删除tags的时候 添加删除缓存
 
+5. 不会在vite使用eslint
+   yarn add eslint prettier --save-dev
+
 ### 添加依赖导出scss
  [how-to-share-variables-between-js-and-sass](https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass)
  yarn add sass-loader node-sass  --save-dev
 
 添加了 path-browserify 使用path 没成功
+
+https://blog.csdn.net/h_mo_liang/article/details/113850297
+yarn add --dev eslint eslint-plugin-vue @typescript-eslint/parser @typescript-eslint/eslint-plugin
+prettier-eslint eslint-config-prettier
+
+
 存在的问题 1、浏览器无法使用requirst\path.resolve(暂时写了个方法替代connectPath)
 
 

@@ -17,6 +17,8 @@ import { useStore } from "vuex";
 import AppMain from './AppMain.vue'
 import Sidebar from './Sidebar/index.vue'
 import HeaderView from './HeaderView/index.vue'
+// import path from 'path'
+// console.log(path.resolve("/"));
 
 export default defineComponent ({
     components:{
