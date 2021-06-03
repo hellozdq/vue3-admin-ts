@@ -12,13 +12,20 @@ export default defineConfig({
   server: {
     open: '/'
   },
+  css:{
+    preprocessorOptions: {
+       scss: {
+         additionalData: `@import "@/styles/index.scss";`
+       }
+     }
+  },
   resolve: {
     alias:{
       '@':resolve('src'),
     },
     extensions:['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
   },
-  plugins: [vue()]
+  plugins: [vue()],
 })
 
 

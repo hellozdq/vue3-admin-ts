@@ -1,8 +1,13 @@
 <template>
     <div class="head">
         <div class="left">
-            <i class="el-icon-s-unfold" @click="handleCollapse(false)" v-show="isCollapse"></i>
-            <i class="el-icon-s-fold" @click="handleCollapse(true)" v-show="!isCollapse"></i>
+            <div class="fold">
+                <i class="el-icon-s-unfold" @click="handleCollapse(false)" v-show="isCollapse"></i>
+                <i class="el-icon-s-fold" @click="handleCollapse(true)" v-show="!isCollapse"></i>
+            </div>
+            <div class="refresh">
+                <i class="el-icon-refresh-right" @click="handleRefresh"></i>
+            </div>
         </div>
         <div class="right">
             <el-dropdown class="drog">
@@ -22,9 +27,10 @@
 </template>
 
 <script>
-import { defineComponent,computed } from "vue";
+import { defineComponent, computed } from "vue";
 import HeadTags from "./HeadTags.vue"
 import { useStore } from "vuex"
+import { useRouter,useRoute } from "vue-router"
 
 export default defineComponent({
     components:{
@@ -32,15 +38,24 @@ export default defineComponent({
     },
     setup(){
         const store = useStore();
+        const router = useRouter();
+        const route = useRoute();
         const isCollapse = computed(() => {
             return  store.state.layout.isCollapse;
         })
+        // 收缩侧边栏
         const handleCollapse = (data) => {
             store.dispatch("layout/set_isCollapse",data);
         }
+        // 刷新
+        const handleRefresh = () => {
+            store.dispatch("layout/remove_caches", route.name);
+            router.replace("/redirect" + route.path);
+        }
         return {
             isCollapse,
-            handleCollapse
+            handleCollapse,
+            handleRefresh
         }
     }
 })
@@ -54,10 +69,13 @@ export default defineComponent({
     .left{
         display: flex;
         align-items: center;
+        .fold{
+            margin-right: 15px;
+        }
         i{
             font-size: 20px;
             cursor: pointer;
-        }
+        }   
     }
     .right{
         display: flex;

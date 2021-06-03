@@ -1,5 +1,6 @@
 <template>
-  <Layout></Layout>
+  <!-- <Layout></Layout> -->
+  <router-view />
 </template>
 
 <script lang="ts">
@@ -13,11 +14,5 @@ export default defineComponent({
 </script>
 
 <style>
-html,body,a,p{
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  text-decoration: none;
-}
+
 </style>

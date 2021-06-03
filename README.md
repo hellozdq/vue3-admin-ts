@@ -174,11 +174,19 @@ resolve.extensions
 
 
 3. 引入相关的组件 主要是侧边栏的和头部导航的，
-   进行处理各自点击路由跳转，统一在layout/index.vue 中监听route的变化进行选中的路由添加到vuex 中的导航页面tabViews，
+   进行处理各自点击路由跳转，统一在layout/index.vue 中监听route.path的变化进行选中的路由添加到vuex 中的导航页面tabViews，
    在vuex中进行选中的页面进行添加删除
 
+4. 页面缓存
+   使用vuex 保存组件页面缓存
+   添加删除tags的时候 添加删除缓存
+
+### 添加依赖导出scss
+ [how-to-share-variables-between-js-and-sass](https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass)
+ yarn add sass-loader node-sass  --save-dev
 
 添加了 path-browserify 使用path 没成功
+存在的问题 1、浏览器无法使用requirst\path.resolve(暂时写了个方法替代connectPath)
 
 
 

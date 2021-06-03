@@ -28,9 +28,14 @@ export default defineComponent ({
         const route = useRoute();
         const router = useRouter();
         const store = useStore();
-        store.dispatch("layout/add_tagViews",router.resolve("/"));
+        const homePath = localStorage.getItem('homePath') || '';
+        store.dispatch("layout/add_tagViews",router.resolve(homePath));
+        store.dispatch("layout/add_tagViews",router.resolve(route.path == '/' ? homePath : route.path));
         // 监听路由变化 每次变化添加一次tag;
         watch(() => route.path,()=>{
+            if(route.meta && route.meta.noShowTag){
+                return;
+            }
             store.dispatch("layout/add_tagViews",route);
         })  
     }

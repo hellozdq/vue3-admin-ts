@@ -2,9 +2,10 @@
 <template>
 <div class="sidebar">
   <div class="logo">logo</div>
-  <el-menu background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#409EFF"
+  <el-menu 
+      :background-color="variables.menuBg"
+      :text-color="variables.menuText"
+      :active-text-color="variables.menuActiveText"
       :default-active="route.path"
       class="el-menu-vertical-demo menu" 
       :collapse="isCollapse"
@@ -17,13 +18,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, reactive } from "vue";
 import { useRoute } from "vue-router"
 import { useStore } from "vuex"
 import router from "@/router/index"
 
 import SidebarItem from './SidebarItem.vue'
 
+import variablesScss from '@/styles/variables.scss'
 export default defineComponent({
   components:{
     SidebarItem
@@ -38,9 +40,15 @@ export default defineComponent({
       
       // 获取菜单路由
       const menus = router.options.routes;
-
       
-      return {isCollapse, menus, route}
+      // 获取scss
+      const variables = () => {
+        return variablesScss;
+      }
+      console.log("variablesScss.menuBg")
+      console.log(variablesScss.menuBg)
+
+      return {isCollapse, menus, route, variables:variables()}
   }
 })
 </script>
