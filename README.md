@@ -184,6 +184,12 @@ resolve.extensions
 5. 不会在vite使用eslint
    yarn add eslint prettier --save-dev
 
+6. 添加登陆页面
+
+7. 添加并配置全局axios
+
+8. 添加动态路由(权限处理)
+
 ### 添加依赖导出scss
  [how-to-share-variables-between-js-and-sass](https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass)
  yarn add sass-loader node-sass  --save-dev
@@ -196,6 +202,8 @@ prettier-eslint eslint-config-prettier
 
 
 存在的问题 1、浏览器无法使用requirst\path.resolve(暂时写了个方法替代connectPath)
+2.eslint 用不了 引入scss 到js 用不了
+3.axios  AxiosRequestConfig 不存在loading 
 
 
 

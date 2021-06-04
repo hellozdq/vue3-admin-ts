@@ -1,5 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+const Layout = () => import('@/layout/index.vue');
+const Redirect = () => import('@/views/redirect/index.vue');
+const Home = () => import('@/views/Home/index.vue');
+const Login = () => import('@/views/login/index.vue');
+import aboutRouter from './modules/about';
+
+
 /* 
 routes 
 path: 路由
@@ -11,6 +18,7 @@ meta: 自定义属性
     icon：图标
     hiddenParent: 隐藏当前级（当只有一个子元素且为true时只显示children子级的数据）
     noShowTag: 不需要显示在tag上
+    roles:["admin"] //权限
 */
 // 首页路由
 const homePath = '/home';
@@ -21,7 +29,7 @@ export default createRouter({
     routes: [
         {
         path: '/redirect',
-        component: () => import('@/layout/index.vue'),
+        component: Layout,
         meta:{
             hidden: true,
         },
@@ -29,7 +37,7 @@ export default createRouter({
                 {
                     path: '/redirect/:path*',
                     name:'Redirect',
-                    component: () => import('@/views/redirect/index.vue'),
+                    component: Redirect,
                     meta:{
                         noShowTag:true
                     }
@@ -38,7 +46,7 @@ export default createRouter({
         },
         {
             path: '/',
-            component:() => import('@/layout/index.vue'),
+            component: Layout,
             redirect:homePath,
             meta:{
                 hiddenParent:true
@@ -46,7 +54,7 @@ export default createRouter({
             children:[
                 {
                     path: homePath,
-                    component:() => import('../views/home/index.vue'),
+                    component:Home,
                     name:"Home",
                     meta:{
                         title: "主页",
@@ -56,27 +64,8 @@ export default createRouter({
             ]
         },
         {
-            path: '/about',
-            component:() => import('@/layout/index.vue'),
-            meta:{
-                title: "关于",
-                icon:'el-icon-s-shop'
-            },
-            children:[
-                {
-                    path: '',
-                    component:() => import('../views/about/index.vue'),
-                    name:"About",
-                    meta:{
-                        title: "关于列表",
-                        icon:'el-icon-s-shop'
-                    },
-                },
-            ]
-        },
-        {
             path: '/login',
-            component:() => import('../views/home/index.vue'),
+            component: Login,
             meta:{
                 hidden: true,
                 noShowTag:true
@@ -84,3 +73,7 @@ export default createRouter({
         }
     ]
 })
+
+export const asyncRouter = [
+    aboutRouter
+]

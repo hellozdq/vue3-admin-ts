@@ -18,6 +18,13 @@
 </template>
 
 <script lang="ts">
+
+// import path from 'path'
+// path.resolve("/a")
+
+
+// const path = require('path');
+
 import { defineComponent, computed, reactive } from "vue";
 import { useRoute } from "vue-router"
 import { useStore } from "vuex"
@@ -25,7 +32,7 @@ import router from "@/router/index"
 
 import SidebarItem from './SidebarItem.vue'
 
-import variablesScss from '@/styles/variables.scss'
+import color from '@/common/color'
 export default defineComponent({
   components:{
     SidebarItem
@@ -37,18 +44,11 @@ export default defineComponent({
       const isCollapse = computed(() => {
           return  store.state.layout.isCollapse;
       })
-      
       // 获取菜单路由
       const menus = router.options.routes;
-      
-      // 获取scss
-      const variables = () => {
-        return variablesScss;
-      }
-      console.log("variablesScss.menuBg")
-      console.log(variablesScss.menuBg)
+      const variables = reactive(color);
 
-      return {isCollapse, menus, route, variables:variables()}
+      return {isCollapse, menus, route, variables}
   }
 })
 </script>
@@ -59,8 +59,8 @@ export default defineComponent({
   flex-direction: column;
   .logo{
     height: 50px;
-    border: solid 1px #f5f5f5;
-    margin: 10px;
+    border-right: solid 1px #e6e6e6;
+    padding: 10px;
   }
   .menu{
     flex: 1;
