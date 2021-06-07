@@ -1,11 +1,11 @@
 <template>
     <div>
-        <el-button @click="toHome">{{name}}</el-button>
-        <el-button @click="edit">修改</el-button>
+        关于2
     </div>
 </template>
 
-<script>
+<script lang="ts">
+console.log("===========>>11111");
 import { useRouter } from 'vue-router'
 import { computed, defineComponent, ref } from 'vue'
 export default defineComponent({

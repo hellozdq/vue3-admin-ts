@@ -1,12 +1,10 @@
 <template>
     <div>
-        <div>{{name}}</div>
-        <div>{{name2}}</div>
-        <el-button @click="setStoreName('name2')">按钮</el-button>
+        主页3
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { useStore } from 'vuex'
 import { computed, defineComponent, ref } from 'vue'
 
@@ -15,7 +13,7 @@ export default defineComponent({
     setup(props) {
         const store = useStore();
         const name = computed(() => store.state.home.name);
-        const name2 = ref("测试---->");
+        const name2 = ref("测试----1111>");
         function setStoreName(name){
             name2.value = name;
             store.dispatch('home/setName',name)

@@ -201,10 +201,10 @@ yarn add --dev eslint eslint-plugin-vue @typescript-eslint/parser @typescript-es
 prettier-eslint eslint-config-prettier
 
 
-存在的问题 1、浏览器无法使用requirst\path.resolve(暂时写了个方法替代connectPath)
+存在的问题 1.浏览器无法使用requirst\path.resolve(暂时写了个方法替代connectPath)
 2.eslint 用不了 引入scss 到js 用不了
 3.axios  AxiosRequestConfig 不存在loading 
-
+4.el-dialog 使用指令失效
 
 
 

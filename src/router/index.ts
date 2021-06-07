@@ -2,8 +2,10 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const Layout = () => import('@/layout/index.vue');
 const Redirect = () => import('@/views/redirect/index.vue');
-const Home = () => import('@/views/Home/index.vue');
 const Login = () => import('@/views/login/index.vue');
+
+import Home from './modules/home';
+import User from './modules/user';
 import aboutRouter from './modules/about';
 
 
@@ -20,10 +22,6 @@ meta: 自定义属性
     noShowTag: 不需要显示在tag上
     roles:["admin"] //权限
 */
-// 首页路由
-const homePath = '/home';
-localStorage.setItem('homePath',homePath);
-
 export default createRouter({
     history: createWebHistory(),
     routes: [
@@ -44,25 +42,8 @@ export default createRouter({
                 }
             ]
         },
-        {
-            path: '/',
-            component: Layout,
-            redirect:homePath,
-            meta:{
-                hiddenParent:true
-            },
-            children:[
-                {
-                    path: homePath,
-                    component:Home,
-                    name:"Home",
-                    meta:{
-                        title: "主页",
-                        icon: "el-icon-s-shop"
-                    },
-                },
-            ]
-        },
+        Home,
+        User,
         {
             path: '/login',
             component: Login,
@@ -70,7 +51,7 @@ export default createRouter({
                 hidden: true,
                 noShowTag:true
             }
-        }
+        },
     ]
 })
 

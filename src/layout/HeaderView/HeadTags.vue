@@ -64,14 +64,15 @@ export default defineComponent({
         // 点击tab
         const handleTab = (tag)=> {
             const path = tag.props.name;
-            if(path != tagViewsValue.value){
-                router.push(path);
-            }
+            router.push(path);
         }
 
         // 关闭当前页
         const closeCurrent = () => {
-            removeTab(route.path);
+            if(tagViews.value.length>1){
+                removeTab(route.path);
+            }
+            
         }
 
         // 关闭其他页
@@ -130,6 +131,9 @@ export default defineComponent({
 <style>
 .tab .el-tabs__header{
     margin:0;
+}
+.tab .el-tabs{
+    flex: 1;
 }
 </style>
 
