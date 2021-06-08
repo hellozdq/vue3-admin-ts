@@ -34,9 +34,12 @@ export default defineComponent({
             const childs = roles.find((item)=>{
                 return item.roleId === roleId
             })
-            const roleIds = childs?.children.map((item)=>{
-                return item.roleId
-            })
+            let roleIds:Array<number>|undefined;
+            if(childs){
+                roleIds = childs.children.map((item)=>{
+                    return item.roleId
+                })
+            }
             childCheck[roleId] = val ? roleIds : [];
             isIndeterminate[roleId] = false;
         }
