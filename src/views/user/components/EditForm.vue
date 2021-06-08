@@ -1,12 +1,12 @@
 <template>
-    <el-form class="" label-width="70px" :model="form" :rules="rules">
+    <el-form class="" label-width="80px" :model="form" :rules="rules">
         <el-form-item label="账号">
             <el-input v-model="form.account" disabled></el-input>
         </el-form-item>
-        <el-form-item label="姓名" prop="newPassword2">
+        <el-form-item label="姓名" prop="name">
             <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
-        <el-form-item label="手机号码" prop="newPassword2">
+        <el-form-item label="手机号码" prop="phone">
             <el-input v-model="form.phone" placeholder="请输入手机号码"></el-input>
         </el-form-item>
         <el-form-item label="">
