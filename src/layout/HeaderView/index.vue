@@ -16,46 +16,89 @@
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item>个人信息</el-dropdown-item>
-                        <el-dropdown-item>修改密码</el-dropdown-item>
+                        <el-dropdown-item @click="edit">修改密码</el-dropdown-item>
+                        <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
         </div>
     </div>
-    <HeadTags></HeadTags>
+    <head-tags></head-tags>
+
+    <!-- 修改密码 start -->
+    <el-dialog
+        title="修改密码"
+        v-model="dialogVisible"
+        :close-on-click-modal="false"
+        width="500px"
+        >
+        <edit-pass v-model:dialogVisible="dialogVisible" :userId="1"></edit-pass>  
+    </el-dialog>
+    <!-- 修改密码 end -->
 </template>
 
 <script>
-import { defineComponent, computed } from "vue";
-import HeadTags from "./HeadTags.vue"
-import { useStore } from "vuex"
+import { defineComponent, computed, ref } from "vue";
 import { useRouter,useRoute } from "vue-router"
+import { useStore } from "vuex"
+
+import HeadTags from "./HeadTags.vue"
+import { ElMessageBox } from 'element-plus';
+import EditPass from "@/views/user/components/EditPass.vue";
 
 export default defineComponent({
     components:{
-        HeadTags
+        HeadTags,
+        EditPass
     },
     setup(){
         const store = useStore();
         const router = useRouter();
         const route = useRoute();
+
+        // 动态监听收缩侧边栏
         const isCollapse = computed(() => {
             return  store.state.layout.isCollapse;
         })
+
         // 收缩侧边栏
         const handleCollapse = (data) => {
             store.dispatch("layout/set_isCollapse",data);
         }
+
         // 刷新
         const handleRefresh = () => {
             store.dispatch("layout/remove_caches", route.name);
             router.replace("/redirect" + route.path);
         }
+
+        // 修改密码
+        let dialogVisible = ref(false);
+        const edit = () => {
+            console.log("--------------1")
+            dialogVisible.value = true;
+        }
+
+        // 退出登录
+        const logOut = () => {
+            ElMessageBox.confirm('您确定要退出登录？', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+            }).then(() => {
+                router.replace("/login");
+            }).catch(() => {
+                
+            })
+        }
+
         return {
             isCollapse,
             handleCollapse,
-            handleRefresh
+            handleRefresh,
+            dialogVisible,
+            edit,
+            logOut
         }
     }
 })

@@ -1,11 +1,10 @@
 <template>
     <div>
-        关于2
+        关于
     </div>
 </template>
 
 <script lang="ts">
-console.log("===========>>11111");
 import { useRouter } from 'vue-router'
 import { computed, defineComponent, ref } from 'vue'
 export default defineComponent({

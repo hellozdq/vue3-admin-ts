@@ -1,19 +1,10 @@
+import { _RouteRecordBase as Route } from 'vue-router'
 type state = {
     isCollapse: boolean,
     tagViews: Array<Object>,
     caches:Array<string>
 }
-type Route = {
-  fullPath:string, 
-  hash: string,
-  matched: Array<Object>,
-  meta: Object,
-  name: string,
-  params: Object,
-  path: string,
-  query: Object,
-  redirectedFrom: any
-}
+
 const state:state = {
     isCollapse:false, //侧边栏是否收起
     tagViews:[],//tag导航的页面
@@ -28,7 +19,7 @@ const mutations = {
   },
   // 添加tags
   ADD_TAGVIEWS: (state:state,data:Route) => {
-    const isExist = state.tagViews.some((item)=>{
+    const isExist = state.tagViews.some((item:any)=>{
       return item.path === data.path
     })
     
@@ -37,7 +28,7 @@ const mutations = {
   },
   // 删除tags
   REMOVE_TAGVIEWS: (state:state,data:string) => {
-    const index = state.tagViews.findIndex((item)=>{
+    const index = state.tagViews.findIndex((item:any)=>{
       return item.path === data
     })
     state.tagViews.splice(index,1);

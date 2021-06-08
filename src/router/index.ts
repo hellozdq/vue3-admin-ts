@@ -1,13 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+
 const Layout = () => import('@/layout/index.vue');
+const Home = () => import('@/views/home/index.vue');
 const Redirect = () => import('@/views/redirect/index.vue');
 const Login = () => import('@/views/login/index.vue');
 
-import Home from './modules/home';
-import User from './modules/user';
-import aboutRouter from './modules/about';
+import UserRouter from './modules/user';
+import AboutRouter from './modules/about';
 
+
+// 首页路由
+const homePath = '/home';
+localStorage.setItem('homePath',homePath);
 
 /* 
 routes 
@@ -42,8 +47,26 @@ export default createRouter({
                 }
             ]
         },
-        Home,
-        User,
+        {
+            path: '/',
+            component: Layout,
+            redirect:homePath,
+            meta:{
+                hiddenParent:true
+            },
+            children:[
+                {
+                    path: homePath,
+                    component:Home,
+                    name:"Home",
+                    meta:{
+                        title: "主页",
+                        icon: "el-icon-s-shop"
+                    },
+                },
+            ]
+        },
+        UserRouter,
         {
             path: '/login',
             component: Login,
@@ -56,5 +79,5 @@ export default createRouter({
 })
 
 export const asyncRouter = [
-    aboutRouter
+    AboutRouter
 ]

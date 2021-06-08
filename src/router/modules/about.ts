@@ -1,5 +1,5 @@
 const Layout = () => import('@/layout/index.vue');
-const About = () => import('@/views/About/index.vue');
+const About = () => import('@/views/about/index.vue');
 export default {
     path: '/about',
     component: Layout,

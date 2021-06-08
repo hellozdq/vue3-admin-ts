@@ -1,6 +1,6 @@
 <template>
     <div>
-        主页3
+        {{name2}}
     </div>
 </template>
 
@@ -13,7 +13,7 @@ export default defineComponent({
     setup(props) {
         const store = useStore();
         const name = computed(() => store.state.home.name);
-        const name2 = ref("测试----1111>");
+        const name2 = ref("主页");
         function setStoreName(name){
             name2.value = name;
             store.dispatch('home/setName',name)

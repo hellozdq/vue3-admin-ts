@@ -38,32 +38,52 @@
         </el-dialog>
     <!-- 权限 end -->
 
-    <!-- 编辑 -->
+    <!-- 编辑 start -->
+        <el-dialog
+            title="编辑"
+            v-model="dialogEditVisible"
+            :close-on-click-modal="false"
+            width="500px"
+            >
+            <edit-form v-model:dialogEditVisible="dialogEditVisible" :userId="editForm.userId"></edit-form>
+        </el-dialog>
+    <!-- 编辑 end -->
     </div>
 </template>
 
 <script lang="ts">
     import { defineComponent, ref, reactive, Ref } from 'vue'
     import RolesForm from './components/RolesForm.vue'
+    import EditForm from './components/EditForm.vue'
+    
     export default defineComponent({
         components:{
-            RolesForm
+            RolesForm,
+            EditForm
         },
         setup(){
+            // 表格数据
             const tableData = reactive([{
                 account: '15889786029',
                 name: '王小虎',
                 phone: '15889786029'
             }])
 
+            // 显示权限dialog
             let dialogRolesVisible:Ref<boolean> = ref<boolean>(false);
-            // 打开权限页面
+
+            // 显示修改dialog
+            let dialogEditVisible:Ref<boolean> = ref<boolean>(false);
+
+            // 权限页面
             const editRoles = () => {
                 dialogRolesVisible.value = true;
             };
-
+            
+            // 修改页面
             let editForm = reactive<object>({});
             const editUser = (row) => {
+                dialogEditVisible.value = true;
                 editForm = {...row};
             };
             return { 
@@ -71,6 +91,7 @@
                     editRoles,
                     editUser,
                     dialogRolesVisible,
+                    dialogEditVisible,
                     editForm
             }
         },

@@ -13,7 +13,7 @@ const service = axios.create({
 let loadingInstance:any
 // request interceptor
 service.interceptors.request.use(
-  config => {
+  (config:any) => {
     // do something before request is sent
     if (config.isLoading) {
       loadingInstance = ElLoading.service({
@@ -29,7 +29,6 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    // do something with request error
     console.log(error) // for debug
     return Promise.reject(error)
   }

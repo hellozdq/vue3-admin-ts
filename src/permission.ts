@@ -3,20 +3,20 @@
 import router, { asyncRouter } from '@/router/index';
 import { filterRoutes } from '@/common/permission'
 import store from '@/store/index'
-console.log(store)
-localStorage.setItem("router","false")
+import { cusLocalStorage } from '@/common/index';
+
+cusLocalStorage.set("router",true);
 router.beforeEach((to, from, next) => {
-    if(localStorage.getItem("router") !== 'true'){
+    if(cusLocalStorage.get("router")){
+        // 动态路由添加
         const roles = store.state.user.roles;
-        console.log('roles')
-        console.log(roles)
-        console.log(asyncRouter)
         const routes = filterRoutes(asyncRouter,roles)
-        router.addRoute(asyncRouter[0]);
+        for(let i in routes){
+            router.addRoute(asyncRouter[i]);
+        }
         router.options.routes = router.options.routes.concat(asyncRouter);
-        
-        localStorage.setItem("router","true")
-        next({ ...to, replace: true })
+        cusLocalStorage.set("router",false);
+        next({ ...to, replace: true });
     }else{
         next()
     }
