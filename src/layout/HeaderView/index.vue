@@ -86,7 +86,9 @@ export default defineComponent({
                     cancelButtonText: '取消',
                     type: 'warning'
             }).then(() => {
-                router.replace("/login");
+                localStorage.removeItem('token');
+                localStorage.removeItem('accountId');
+                router.replace('/login');
             }).catch(() => {
                 
             })

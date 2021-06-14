@@ -7,21 +7,21 @@ const state: state = {
 }
 
 const mutations = {
-    SET_ROLES: (state: state, data: Array<string>) => {
-        state.roles = data;
-    },
-    GET_INFO: (state: state, data: Array<string>) => {
-        state.roles = data;
-    }
+    // SET_ROLES: (state: state, data: Array<string>) => {
+    //     state.roles = data;
+    // },
+    // GET_INFO: (state: state, data: Array<string>) => {
+    //     state.roles = data;
+    // }
 }
 
 const actions = {
-    setRoles: ({ commit }, data: Array<string>) => {
-        commit("SET_ROLES", data);
-    },
-    getInfo: ({ commit }, data: Array<string>) => {
-        commit("GET_INFO", ["admin"]);
-    }
+    // setRoles: ({ commit }, data: Array<string>) => {
+    //     commit("SET_ROLES", data);
+    // },
+    // getInfo: ({ commit }, data: Array<string>) => {
+    //     commit("GET_INFO", ["admin"]);
+    // }
 }
 
 export default {

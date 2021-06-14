@@ -208,6 +208,38 @@ prettier-eslint eslint-config-prettier
 4. el-dialog 使用指令失效
 
 
+### 添加 加密
+yarn add jsencrypt --dep
+
+### 设置变量
+[https://blog.csdn.net/chendf__/article/details/115676683](https://blog.csdn.net/chendf__/article/details/115676683)
+# 安装cross-env
+yarn add cross-env dotenv -D
+根目录创建 
+.env.development
+.env.production
+
+```
+vite.config.js
+const fs = require('fs');
+
+try {
+  // 根据环境变量加载环境变量文件
+  const file = dotenv.parse(fs.readFileSync(`.env.${process.env.NODE_ENV}`))
+  // 根据获取的key给对应的环境变量赋值
+  for (const key in (file as object)) {
+    process.env[key] = file[key]
+  }
+} catch (e) {
+  console.error(e)
+}
+```
+
+### 问题
+.vue 没法访问process
+
+
+
 
 
 
