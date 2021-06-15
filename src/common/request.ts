@@ -11,7 +11,6 @@ const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 30000 // request timeout
 })
-
 let loadingInstance:any
 // request interceptor
 service.interceptors.request.use(
@@ -22,11 +21,12 @@ service.interceptors.request.use(
         text: '正在请求数据'
       })
     }
-    if (store.getters.token) {
+    if (getToken()) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
+      config.headers['token'] = getToken();
+      console.log(getToken);
     }
     return config
   },

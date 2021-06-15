@@ -1,11 +1,12 @@
 const TokenKey = 'token'
+import { cusLocalStorage } from './index'
 
 export function getToken() {
-  return localStorage.getItem(TokenKey)
+  return cusLocalStorage.get(TokenKey)
 }
 
 export function setToken(token:string) {
-  return localStorage.setItem(TokenKey, token)
+  return cusLocalStorage.set(TokenKey, token)
 }
 
 export function removeToken() {

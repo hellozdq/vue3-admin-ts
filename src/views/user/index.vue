@@ -33,7 +33,7 @@
             </template>
             </el-table-column>
         </el-table>
-        <Pagination :limit="10" :page="1" :pageSizes="[10,50]" :total="1"></Pagination>
+        <Pagination v-model:limit="searchForm.pageSize" v-model:page="searchForm.pageNum" :pageSizes="pageSizes" :total="total" @pagination="getPage()"></Pagination>
 
 
 
@@ -66,6 +66,7 @@ import { defineComponent, ref, reactive, Ref } from 'vue'
 import RolesForm from './components/RolesForm.vue'
 import EditForm from './components/EditForm.vue'
 import Pagination from '@/components/Pagination/index.vue'
+import { getList,ListForm } from '@/api/user'
 
 export default defineComponent({
     components:{
@@ -101,18 +102,37 @@ export default defineComponent({
 
         // 查询
         const onSearch = () => {
+            getList(searchForm)
+            .then((res)=>{
 
+            })
         }
 
         // 查询表单
-        const searchForm = reactive({
+        const searchForm:ListForm = reactive({
             name:'',
-            phone:''
+            phone:12345679,
+            pageNum:1,
+            pageSize:10
         })
+
+        // 总数
+        let total = ref(0);
+
+        // 
+        let pageSizes = reactive([10,20]);
+
+        // 分页
+        const getPage = () => {
+
+        }
 
         return { 
                 onSearch,
                 searchForm,
+                total,
+                pageSizes,
+                getPage,
                 tableData,
                 editRoles,
                 editUser,
