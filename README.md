@@ -239,6 +239,9 @@ try {
 .vue 没法访问process
 
 
+### 需要优化的 
+1. 表格的大小需要调小些边距
+
 
 
 
@@ -292,3 +295,6 @@ Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 3. Open `src/main.ts` in VSCode
 4. Open the VSCode command palette
 5. Search and run "Select TypeScript version" -> "Use workspace version"
+
+
+

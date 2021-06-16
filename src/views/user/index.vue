@@ -76,11 +76,7 @@ export default defineComponent({
     },
     setup(){
         // 表格数据
-        let tableData = reactive([{
-            account: '15889786029',
-            name: '王小虎',
-            phone: '15889786029'
-        }])
+        let tableData = ref([]);
 
         // 显示权限dialog
         let dialogRolesVisible:Ref<boolean> = ref<boolean>(false);
@@ -105,15 +101,15 @@ export default defineComponent({
             getList(searchForm)
             .then((res)=>{
                 const data = res.data;
-                total = data.total;
-                tableData = data.list;
+                tableData.value = data.list;
+                total.value = data.total;
             })
         }
 
         // 查询表单
         const searchForm:ListForm = reactive({
             name:'',
-            phone:12345679,
+            phone:'',
             pageNum:1,
             pageSize:10
         })

@@ -4,7 +4,7 @@ export type ListForm = {
     pageSize:number,
     pageNum:number,
     name:string,
-    phone:number
+    phone:string
 }
 
 // 获取用户列表
@@ -44,7 +44,7 @@ export function updateRoles(data:UpdateRoleQuery) {
 export type UpdateData = {
     id: number,
     name: string,
-    phone: number
+    phone: string
 }
 
 // 修改权限

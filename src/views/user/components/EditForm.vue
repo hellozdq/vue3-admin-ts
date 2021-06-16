@@ -4,7 +4,7 @@
             <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
-            <el-input v-model="form.phone" type="number" placeholder="请输入手机号码"></el-input>
+            <el-input v-model="form.phone" placeholder="请输入手机号码"></el-input>
         </el-form-item>
         <el-form-item label="">
             <el-button size="medium" type="primary" @click="save">保 存</el-button>
@@ -27,7 +27,7 @@ export default defineComponent({
         const form:UpdateData = reactive({
             id:0,
             name:'',
-            phone:123456
+            phone:''
         });
         // 规则
         const rules = {
