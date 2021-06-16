@@ -21,3 +21,19 @@ export function getPublicKey() {
       method: 'get'
     })
 }
+
+// 修改密码
+export type UpdataData = {
+    id:number,
+    account?:string,
+    password?:string,
+    newPassword:string,
+    newPassword2?:string
+}
+export function updatePassword(data:UpdataData){
+    return request({
+        url: '/login/updatePassword',
+        method: 'put',
+        data
+      })
+}
