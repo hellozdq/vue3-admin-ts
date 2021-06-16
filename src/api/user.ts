@@ -23,3 +23,34 @@ export function getRoles() {
     method: 'get'
   })
 }
+
+// updateRoles, UpdateRoleQuery
+
+export type UpdateRoleQuery = {
+    userId:number,
+    roles:string
+}
+
+// 修改权限
+export function updateRoles(data:UpdateRoleQuery) {
+    return request({
+        url: '/user/updateRoles',
+        method: 'get'
+    })
+}
+
+// updateUser, UpdateData
+// 修改用户
+export type UpdateData = {
+    id: number,
+    name: string,
+    phone: number
+}
+
+// 修改权限
+export function updateUser(data:UpdateData) {
+    return request({
+        url: '/user/updateUser',
+        method: 'put'
+    })
+}

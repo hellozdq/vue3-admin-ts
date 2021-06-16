@@ -33,7 +33,7 @@
             </template>
             </el-table-column>
         </el-table>
-        <Pagination v-model:limit="searchForm.pageSize" v-model:page="searchForm.pageNum" :pageSizes="pageSizes" :total="total" @pagination="getPage()"></Pagination>
+        <Pagination v-model:limit="searchForm.pageSize" v-model:page="searchForm.pageNum" :pageSizes="pageSizes" :total="total" @pagination="getPage"></Pagination>
 
 
 
@@ -62,65 +62,6 @@
 </template>
 
 <script lang="ts">
-<<<<<<< HEAD
-    import { defineComponent, ref, reactive, Ref } from 'vue'
-
-    import { getList,ListData } from '@/api/user'
-    
-    import RolesForm from './components/RolesForm.vue'
-    import EditForm from './components/EditForm.vue'
-    
-    
-    export default defineComponent({
-        components:{
-            RolesForm,
-            EditForm
-        },
-        setup(){
-            // 表格数据
-            let tableData = reactive([])
-
-            // 获取数据
-            const searchList = () => {
-                const form:ListData = {
-                    pageSize:1,
-                    pageNum:10,
-                    name:'',
-                    phone:1111111
-                }
-                getList(form).then((res) => {
-                    tableData = res.data;
-                })
-            }
-
-            // 显示权限dialog
-            let dialogRolesVisible:Ref<boolean> = ref<boolean>(false);
-
-            // 显示修改dialog
-            let dialogEditVisible:Ref<boolean> = ref<boolean>(false);
-
-            // 权限页面
-            const editRoles = () => {
-                dialogRolesVisible.value = true;
-            };
-            
-            // 修改页面
-            let editForm = reactive<object>({});
-            const editUser = (row) => {
-                dialogEditVisible.value = true;
-                editForm = {...row};
-            };
-            return { 
-                    tableData,
-                    editRoles,
-                    editUser,
-                    dialogRolesVisible,
-                    dialogEditVisible,
-                    editForm
-            }
-        },
-    })
-=======
 import { defineComponent, ref, reactive, Ref } from 'vue'
 import RolesForm from './components/RolesForm.vue'
 import EditForm from './components/EditForm.vue'
@@ -135,7 +76,7 @@ export default defineComponent({
     },
     setup(){
         // 表格数据
-        const tableData = reactive([{
+        let tableData = reactive([{
             account: '15889786029',
             name: '王小虎',
             phone: '15889786029'
@@ -163,7 +104,9 @@ export default defineComponent({
         const onSearch = () => {
             getList(searchForm)
             .then((res)=>{
-
+                const data = res.data;
+                total = data.total;
+                tableData = data.list;
             })
         }
 
@@ -182,8 +125,10 @@ export default defineComponent({
         let pageSizes = reactive([10,20]);
 
         // 分页
-        const getPage = () => {
-
+        const getPage = (data:{page:number,limit:number}) => {
+            searchForm.pageNum = data.page;
+            searchForm.pageSize = data.limit;
+            console.log(searchForm);
         }
 
         return { 
@@ -201,7 +146,6 @@ export default defineComponent({
         }
     },
 })
->>>>>>> 1619b5af35c2e217776cb23803f645d64ef326b0
 </script>
 
 <style lang="scss" scoped>

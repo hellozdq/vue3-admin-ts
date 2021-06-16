@@ -8,6 +8,7 @@ import { cusLocalStorage } from '@/common/index';
 cusLocalStorage.set('router',true);
 const whiteList = ['/login']; //白名单
 router.beforeEach((to, from, next) => {
+    return next();
     if(whiteList.includes(to.path)){
         return next();
     }
@@ -17,7 +18,12 @@ router.beforeEach((to, from, next) => {
     if(cusLocalStorage.get('router')){
         // 动态路由添加
         const roles = ['admin'];
-        const routes = filterRoutes(asyncRouter,roles);
+        let routes:any = [];
+        if(roles[0]=='admin'){
+            routes = asyncRouter;
+        }else{
+            routes = filterRoutes(asyncRouter,roles);
+        }
         for(let i in routes){
             router.addRoute(asyncRouter[i]);
         }

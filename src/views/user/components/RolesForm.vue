@@ -1,13 +1,5 @@
 <template>
-    <div class="item" v-for="item in roles" :key="item.roleId">
-        <div class="item-title">{{item.label}}</div>
-        <div class="item-content">
-            <el-checkbox class="item-content-head" :indeterminate="isIndeterminate[item.roleId]" v-model="parentCheck[item.roleId]" @change="handleCheckAllChange($event,item.roleId)">全选</el-checkbox>
-            <el-checkbox-group v-model="childCheck[item.roleId]" @change="handleCheckedCitiesChange($event,item.roleId,item.children.length)">
-                <el-checkbox v-for="child in item.children" :label="child.roleId" :key="child.roleId">{{child.label}}</el-checkbox>
-            </el-checkbox-group>
-        </div>
-    </div>
+    <roles-card></roles-card>
     <div class="footer">
         <span class="dialog-footer">
             <el-button type="primary" size="medium" @click="confirm">确 定</el-button>
@@ -21,12 +13,13 @@ import { defineComponent,reactive } from 'vue';
 import { ElMessage } from 'element-plus';
 
 import { updateRoles, UpdateRoleQuery } from '@/api/user'
+import RolesCard from './RolesCard.vue'
 
 export default defineComponent({
+    name:"RolesForm",
     props:["userId","dialogRolesVisible"],
+    components: { RolesCard },
     setup(props,context){
-        console.log(props)
-        
         const roles = reactive([{roleId:123,label:"parent",children:[{roleId:12,label:"child"}]}]);
 
         const parentCheck = reactive({123:false});
