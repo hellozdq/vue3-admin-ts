@@ -18,10 +18,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, computed } from 'vue'
 import { scrollTo } from '@/common/scroll-to'
 
-export default {
+type Props = {
+  total:number,
+  page:number,
+  limit:number,
+  pageSizes:object,
+  layout:string,
+  background:boolean,
+  autoScroll:boolean,
+  hidden:boolean
+}
+
+export default defineComponent({
   name: 'Pagination',
   props: {
     total: {
@@ -59,39 +71,48 @@ export default {
       default: false
     }
   },
-  computed: {
-    currentPage: {
-      get() {
-        return this.page
-      },
-      set(val) {
-        this.$emit('update:page', val)
+  setup(props: Props,context){
+    console.log(props)
+    console.log(props.page)
+    const currentPage = computed({
+        get() {
+          return props.page
+        },
+        set(val) {
+          context.emit('update:page', val)
+        }
+    })
+
+    const pageSize = computed({
+        get() {
+          return props.limit
+        },
+        set(val) {
+          context.emit('update:limit', val)
+        }
+    })
+
+    const handleSizeChange = (val)=> {
+      context.emit('pagination', { page: currentPage, limit: val })
+      if (props.autoScroll) {
+        scrollTo(0, 800,()=>{})
       }
-    },
-    pageSize: {
-      get() {
-        return this.limit
-      },
-      set(val) {
-        this.$emit('update:limit', val)
+    }
+    const handleCurrentChange = (val) => {
+      context.emit('pagination', { page: val, limit: pageSize })
+      if (props.autoScroll) {
+        scrollTo(0, 800,()=>{})
       }
+    }
+
+    return {
+      currentPage,
+      pageSize,
+      handleSizeChange,
+      handleCurrentChange
     }
   },
-  methods: {
-    handleSizeChange(val) {
-      this.$emit('pagination', { page: this.currentPage, limit: val })
-      if (this.autoScroll) {
-        scrollTo(0, 800)
-      }
-    },
-    handleCurrentChange(val) {
-      this.$emit('pagination', { page: val, limit: this.pageSize })
-      if (this.autoScroll) {
-        scrollTo(0, 800)
-      }
-    }
-  }
-}
+})
 </script>
 
 <style scoped>
