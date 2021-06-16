@@ -53,8 +53,12 @@
 
 <script lang="ts">
     import { defineComponent, ref, reactive, Ref } from 'vue'
+
+    import { getList,ListData } from '@/api/user'
+    
     import RolesForm from './components/RolesForm.vue'
     import EditForm from './components/EditForm.vue'
+    
     
     export default defineComponent({
         components:{
@@ -63,11 +67,20 @@
         },
         setup(){
             // 表格数据
-            const tableData = reactive([{
-                account: '15889786029',
-                name: '王小虎',
-                phone: '15889786029'
-            }])
+            let tableData = reactive([])
+
+            // 获取数据
+            const searchList = () => {
+                const form:ListData = {
+                    pageSize:1,
+                    pageNum:10,
+                    name:'',
+                    phone:1111111
+                }
+                getList(form).then((res) => {
+                    tableData = res.data;
+                })
+            }
 
             // 显示权限dialog
             let dialogRolesVisible:Ref<boolean> = ref<boolean>(false);

@@ -17,7 +17,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent,reactive } from "vue";
+import { defineComponent,reactive } from 'vue';
+import { ElMessage } from 'element-plus';
+
+import { updateRoles, UpdateRoleQuery } from '@/api/user'
 
 export default defineComponent({
     props:["userId","dialogRolesVisible"],
@@ -45,15 +48,21 @@ export default defineComponent({
         }
 
         const handleCheckedCitiesChange = (val:Array<number>,roleId:number,childLen:number) => {
-            console.log(val)
-            console.log(roleId)
             let checkedCount = val.length;
             parentCheck[roleId] = checkedCount === childLen;
             isIndeterminate[roleId] = checkedCount > 0 && checkedCount < childLen;
         }
         
         const confirm = () => {
-            context.emit("update:dialogRolesVisible",false);
+            const from:UpdateRoleQuery = {
+                userId:0,
+                roles:''
+            }
+            updateRoles(from).then(()=> {
+                ElMessage.success("修改成功！");
+                context.emit("update:dialogRolesVisible",false);
+            })
+            
         }
 
         const cancel = () => {

@@ -43,7 +43,7 @@ import { useRouter,useRoute } from "vue-router"
 import { useStore } from "vuex"
 
 import HeadTags from "./HeadTags.vue"
-import { ElMessageBox } from 'element-plus';
+import { ElMessageBox, ElMessage } from 'element-plus';
 import EditPass from "@/views/user/components/EditPass.vue";
 
 export default defineComponent({
@@ -75,7 +75,6 @@ export default defineComponent({
         // 修改密码
         let dialogVisible = ref(false);
         const edit = () => {
-            console.log("--------------1")
             dialogVisible.value = true;
         }
 
@@ -87,6 +86,9 @@ export default defineComponent({
                     type: 'warning'
             }).then(() => {
                 router.replace("/login");
+                localStorage.removeItem("token");
+                ElMessage.success("成功退出");
+                localStorage.removeItem("userId",data.id);
             }).catch(() => {
                 
             })

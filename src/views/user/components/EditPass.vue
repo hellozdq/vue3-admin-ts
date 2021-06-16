@@ -21,12 +21,15 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
-import { phone } from '@/common/regexp'
+import { ElMessage } from 'element-plus';
+
+import { updatePassword, UpdataData } from '@/api/login'
 
 export default defineComponent({
     props:['userId'],
     setup(props,context) {
-        const form = reactive({
+        const form:UpdataData = reactive({
+            id:0,
             account:'',
             password:'',
             newPassword:'',
@@ -57,7 +60,11 @@ export default defineComponent({
 
         // 保存
         const save = () => {
-            context.emit('update:dialogPassVisible',false);
+            const { id, account, password, newPassword } = form
+            updatePassword({ id, account, password, newPassword }).then(()=>{
+                ElMessage.success("修改成功！")
+                context.emit('update:dialogPassVisible',false);
+            })
         }
         
         // 取消
