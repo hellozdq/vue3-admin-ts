@@ -44,7 +44,7 @@
             :close-on-click-modal="false"
             width="600px"
             >
-            <roles-form v-model:dialogRolesVisible="dialogRolesVisible" :userId="editForm.userId"></roles-form>
+            <roles-form v-model:dialogRolesVisible="dialogRolesVisible" :userId="form.userId"></roles-form>
         </el-dialog>
     <!-- 权限 end -->
 
@@ -54,15 +54,16 @@
             v-model="dialogEditVisible"
             :close-on-click-modal="false"
             width="500px"
+            v-if="dialogEditVisible"
             >
-            <edit-form v-model:dialogEditVisible="dialogEditVisible" :userId="editForm.userId"></edit-form>
+            <edit-form v-model:dialogEditVisible="dialogEditVisible" :userForm="userForm" @onSearch="onSearch"></edit-form>
         </el-dialog>
     <!-- 编辑 end -->
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, Ref } from 'vue'
+import { defineComponent, ref, reactive, Ref, onMounted } from 'vue'
 import RolesForm from './components/RolesForm.vue'
 import EditForm from './components/EditForm.vue'
 import Pagination from '@/components/Pagination/index.vue'
@@ -90,10 +91,10 @@ export default defineComponent({
         };
         
         // 修改页面
-        let editForm = reactive<object>({});
+        let userForm = ref<object>({});
         const editUser = (row) => {
             dialogEditVisible.value = true;
-            editForm = {...row};
+            userForm.value = {...row};
         };
 
         // 查询
@@ -105,6 +106,7 @@ export default defineComponent({
                 total.value = data.total;
             })
         }
+        
 
         // 查询表单
         const searchForm:ListForm = reactive({
@@ -127,6 +129,10 @@ export default defineComponent({
             console.log(searchForm);
         }
 
+        onMounted(()=>{
+            onSearch();
+        })
+
         return { 
                 onSearch,
                 searchForm,
@@ -138,7 +144,7 @@ export default defineComponent({
                 editUser,
                 dialogRolesVisible,
                 dialogEditVisible,
-                editForm
+                userForm
         }
     },
 })

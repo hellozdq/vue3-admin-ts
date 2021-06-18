@@ -51,6 +51,7 @@ export type UpdateData = {
 export function updateUser(data:UpdateData) {
     return request({
         url: '/user/updateUser',
-        method: 'put'
+        method: 'put',
+        data
     })
 }

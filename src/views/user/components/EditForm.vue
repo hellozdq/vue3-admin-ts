@@ -1,5 +1,5 @@
 <template>
-    <el-form class="" label-width="80px" :model="form" :rules="rules">
+    <el-form ref="formRef" label-width="80px" :model="form" :rules="rules">
         <el-form-item label="姓名" prop="name">
             <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
@@ -14,38 +14,51 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus';
 
 import { phone } from '@/common/regexp'
 import { updateUser, UpdateData } from '@/api/user'
 
 export default defineComponent({
-    props:['userId'],
+    props:{
+        userForm:{
+            type:Object,
+            required:true
+        }
+    },
     setup(props,context) {
-        console.log(props);
-        const form:UpdateData = reactive({
-            id:0,
-            name:'',
-            phone:''
-        });
+        const obj = {
+            id: props.userForm.id,
+            name: props.userForm.name,
+            phone: props.userForm.phone
+        }
+        const form:UpdateData = reactive(obj);
+        
+        const formRef = ref<any>(null);
         // 规则
         const rules = {
             name: [
-                { required: true, message: '姓名不能为空', trigger: 'blur' }
+                { required: true, message: '姓名不能为空', trigger: 'change' }
             ],
             phone: [
-                { required: true, message: '手机号码不能为空', trigger: 'blur' },
+                { required: true, message: '手机号码不能为空', trigger: 'change' },
                 { pattern: phone, message: '手机号码格式不正确', trigger: 'blur' }
             ]
         }
 
         // 保存
         const save = () => {
-            updateUser(form).then(()=>{
-                ElMessage.success("修改成功！")
-                context.emit('update:dialogEditVisible',false);
-            })
+            formRef.value.validate((valid:boolean) => {
+                if (valid) {
+                    updateUser(form).then(()=>{
+                        context.emit("onSearch");
+                        ElMessage.success("修改成功！")
+                        context.emit('update:dialogEditVisible',false);
+                    })
+                } 
+            });
+            
         }
         
         // 取消
@@ -55,6 +68,7 @@ export default defineComponent({
 
         return {
             form,
+            formRef,
             rules,
             save,
             cancel

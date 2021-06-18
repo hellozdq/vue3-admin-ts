@@ -207,6 +207,14 @@ prettier-eslint eslint-config-prettier
 3. axios  AxiosRequestConfig 不存在loading 
 4. el-dialog 使用指令失效
 
+5. const formRef = ref<any>(null); ref 的typesrcipt 类型
+formRef.value.validate
+(property) Ref<HTMLElement | null>.value: HTMLElement | null
+Object is possibly 'null'.
+
+暂时使用any
+
+
 
 ### 添加 加密
 yarn add jsencrypt --dep
@@ -236,7 +244,11 @@ try {
 ```
 
 ### 问题
-.vue 没法访问process
+.vue 没法访问 process 
+process.env
+
+
+
 
 
 ### 需要优化的 
