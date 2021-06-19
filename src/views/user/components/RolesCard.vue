@@ -1,22 +1,31 @@
 <template>
-    <div class="item" v-for="item in roles" :key="item.roleId">
-        <div class="item-content">
-            <el-checkbox-group v-model="childCheck[item.roleId]" @change="handleCheckedChange($event,item.roleId,item.children.length)">
-                <el-checkbox v-for="child in item.children" :label="child.roleId" :key="child.roleId">{{child.label}}</el-checkbox>
-                <!-- <roles-card v-if="item.children"></roles-card> -->
-            </el-checkbox-group>
-        </div>
+    <div class="item-content">
+        <el-checkbox-group v-model="roleItem[item.roleId]" @change="handleCheckedChange($event,item.roleId,item.children.length)">
+            <el-checkbox v-for="child in item.children" :label="child.roleId" :key="child.roleId">{{child.label}}</el-checkbox>
+            <!-- <roles-card v-if="item.children"></roles-card> -->
+        </el-checkbox-group>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent,reactive } from 'vue';
+import { defineComponent,reactive,watch } from 'vue';
 
 export default defineComponent({
     name:"RolesCard",
-    props:["roles","childCheck"],
+    props:{
+        roles:{
+            type:Object,
+            default:{ids:[]}
+        },
+    },
     setup(props,context){
-        const checks = [];
+        const roleItem = reactive(props.roles.child);
+        watch(roleItem,()=>{
+            context.emit("update:roles",roleItem);
+        })
+        return {
+            roleItem
+        }
     }
 })
 </script>

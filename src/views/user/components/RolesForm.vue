@@ -1,5 +1,5 @@
 <template>
-    <roles-card></roles-card>
+    <roles-card v-model:roles="roles"></roles-card>
     <div class="footer">
         <span class="dialog-footer">
             <el-button type="primary" size="medium" @click="confirm">确 定</el-button>
@@ -20,32 +20,6 @@ export default defineComponent({
     props:["userId","dialogRolesVisible"],
     components: { RolesCard },
     setup(props,context){
-        const roles = reactive([{roleId:123,label:"parent",children:[{roleId:12,label:"child"}]}]);
-
-        const parentCheck = reactive({123:false});
-        const childCheck = reactive({123:[]});
-        const isIndeterminate = reactive({123:false});
-
-        const handleCheckAllChange = (val:Array<number>,roleId:number) => {
-            const childs = roles.find((item)=>{
-                return item.roleId === roleId
-            })
-            let roleIds:Array<number>|undefined;
-            if(childs){
-                roleIds = childs.children.map((item)=>{
-                    return item.roleId
-                })
-            }
-            childCheck[roleId] = val ? roleIds : [];
-            isIndeterminate[roleId] = false;
-        }
-
-        const handleCheckedCitiesChange = (val:Array<number>,roleId:number,childLen:number) => {
-            let checkedCount = val.length;
-            parentCheck[roleId] = checkedCount === childLen;
-            isIndeterminate[roleId] = checkedCount > 0 && checkedCount < childLen;
-        }
-        
         const confirm = () => {
             const from:UpdateRoleQuery = {
                 userId:0,
@@ -82,6 +56,7 @@ export default defineComponent({
             const d:object[] = [];
             for(let i = 0; i<data.length; i++){
                 const item = data[i];
+                item.ids = [];
                 console.log(item.value+':'+rs.includes(item.value));
                 if(!rs.includes(item.value)){
                     continue;
@@ -94,16 +69,10 @@ export default defineComponent({
             return d;
         }   
 
-        const f = fun(obj);
-        console.log(f)
+        const roles = fun(obj);
 
         return {
             roles,
-            parentCheck,
-            childCheck,
-            isIndeterminate,
-            handleCheckAllChange,
-            handleCheckedCitiesChange,
             confirm,
             cancel
         }
