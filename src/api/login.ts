@@ -26,7 +26,7 @@ export function getPublicKey() {
 export type UpdataData = {
     id:number,
     account?:string,
-    password?:string,
+    password:string,
     newPassword:string,
     newPassword2?:string
 }

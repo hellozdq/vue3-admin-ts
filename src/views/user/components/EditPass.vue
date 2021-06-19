@@ -1,5 +1,5 @@
 <template>
-    <el-form class="" label-width="80px" :model="form" :rules="rules">
+    <el-form ref="formRef" label-width="80px" :model="form" :rules="rules">
         <el-form-item label="账号">
             <el-input v-model="form.account" disabled></el-input>
         </el-form-item>
@@ -20,13 +20,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive,ref} from 'vue'
 import { ElMessage } from 'element-plus';
+import JSEncrypt from 'jsencrypt'
 
-import { updatePassword, UpdataData } from '@/api/login'
+import { updatePassword, UpdataData, getPublicKey } from '@/api/login'
 
 export default defineComponent({
-    props:['userId'],
     setup(props,context) {
         const form:UpdataData = reactive({
             id:0,
@@ -58,13 +58,25 @@ export default defineComponent({
             ]
         }
 
+        const formRef = ref<any>(null);
+
         // 保存
         const save = () => {
-            const { id, account, password, newPassword } = form
-            updatePassword({ id, account, password, newPassword }).then(()=>{
-                ElMessage.success("修改成功！")
-                context.emit('update:dialogPassVisible',false);
+            formRef.value.validate(async (valid:boolean) => {
+                if (valid) {
+                    const { id } = form;
+                    const { data:publicKey }:{ data:string } = await getPublicKey();
+                    const jsencrypt = new JSEncrypt({})  // 创建加密对象实例
+                    jsencrypt.setPublicKey(publicKey)//设置公钥
+                    const password = jsencrypt.encrypt(form.password)||'';
+                    const newPassword = jsencrypt.encrypt(form.newPassword)||'';
+                    updatePassword({ id, password, newPassword }).then(()=>{
+                        ElMessage.success("修改成功！")
+                        context.emit('update:dialogPassVisible',false);
+                    })
+                }
             })
+                    
         }
         
         // 取消
