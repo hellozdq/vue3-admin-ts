@@ -62,6 +62,41 @@ export default defineComponent({
             context.emit("update:dialogRolesVisible",false);
         }
 
+        const rs = [1,11,12,121,111,2,21,212];
+        const obj = [{
+            value:1,
+            child:[{value:11,
+                    child:[{value:111},{value:112}]
+                },
+                {value:12,
+                    child:[{value:121},{value:122}]
+                }]
+        },
+        {
+            value:2,
+            child:[{value:21,
+                    child:[{value:211},{value:212}]
+                }]
+        }]
+        const fun = (data)=>{
+            const d:object[] = [];
+            for(let i = 0; i<data.length; i++){
+                const item = data[i];
+                console.log(item.value+':'+rs.includes(item.value));
+                if(!rs.includes(item.value)){
+                    continue;
+                }
+                if(item.child){
+                    item.child = fun(item.child);
+                }
+                d.push(item);
+            }
+            return d;
+        }   
+
+        const f = fun(obj);
+        console.log(f)
+
         return {
             roles,
             parentCheck,

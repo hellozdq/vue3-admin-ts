@@ -44,7 +44,7 @@
             :close-on-click-modal="false"
             width="600px"
             >
-            <roles-form v-model:dialogRolesVisible="dialogRolesVisible" :userId="form.userId"></roles-form>
+            <roles-form v-model:dialogRolesVisible="dialogRolesVisible" :userId="1"></roles-form>
         </el-dialog>
     <!-- 权限 end -->
 
@@ -80,7 +80,7 @@ export default defineComponent({
         let tableData = ref([]);
 
         // 显示权限dialog
-        let dialogRolesVisible:Ref<boolean> = ref<boolean>(false);
+        let dialogRolesVisible:Ref<boolean> = ref<boolean>(true);
 
         // 显示修改dialog
         let dialogEditVisible:Ref<boolean> = ref<boolean>(false);
