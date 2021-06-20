@@ -2,3 +2,6 @@
 .el-dialog__body{
     padding-top: 20px!important;
 }
+.el-table--border::after, .el-table--group::after{
+    width: 0;
+}
