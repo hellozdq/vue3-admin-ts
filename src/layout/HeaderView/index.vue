@@ -110,6 +110,7 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     height: 50px;
+    flex-shrink: 0;
     .left{
         display: flex;
         align-items: center;
