@@ -1,5 +1,7 @@
 <template>
-    <roles-card v-model:roles="roles"></roles-card>
+    <div class="roleForm">
+        <roles-card v-model:roles="roles"></roles-card>
+    </div>
     <div class="footer">
         <span class="dialog-footer">
             <el-button type="primary" size="medium" @click="confirm">确 定</el-button>
@@ -21,6 +23,8 @@ export default defineComponent({
     components: { RolesCard },
     setup(props,context){
         const confirm = () => {
+            console.log(roles)
+            return
             const from:UpdateRoleQuery = {
                 userId:0,
                 roles:''
@@ -37,39 +41,45 @@ export default defineComponent({
         }
 
         const rs = [1,11,12,121,111,2,21,212];
-        const obj = [{
-            value:1,
-            child:[{value:11,
-                    child:[{value:111},{value:112}]
-                },
-                {value:12,
-                    child:[{value:121},{value:122}]
-                }]
-        },
-        {
-            value:2,
-            child:[{value:21,
-                    child:[{value:211},{value:212}]
-                }]
-        }]
+        const obj = {
+            value:0,
+            child:[{
+                value:1,
+                child:[{value:11,
+                        child:[{value:111},{value:112}]
+                    },
+                    {value:12,
+                        child:[{value:121},{value:122}]
+                    }]
+            },
+            {
+                value:2,
+                child:[{value:21,
+                        child:[{value:211},{value:212}]
+                    }]
+            }]}
         const fun = (data)=>{
-            const d:object[] = [];
-            for(let i = 0; i<data.length; i++){
-                const item = data[i];
-                item.ids = [];
-                console.log(item.value+':'+rs.includes(item.value));
-                if(!rs.includes(item.value)){
-                    continue;
-                }
-                if(item.child){
-                    item.child = fun(item.child);
-                }
-                d.push(item);
-            }
-            return d;
-        }   
+            if(data.child){
+                data.ids = [];
+                if(data.child){
+                    for(let i in data.child){
+                        const item= {...data.child[i]};
+                        if(rs.includes(item.value)){
+                            data.ids.push(item.value);
+                        }
+                        data.child[i] = fun(item);
+                    }
 
-        const roles = fun(obj);
+                }
+            }
+            return data;
+        }   
+        console.log(fun(obj))
+        const roles = reactive(fun(obj));
+        // const arr = fun([...obj]);
+        // const roles = {child:arr,ids:[]}
+        // console.log(obj);
+        // console.log(roles);
 
         return {
             roles,
@@ -81,21 +91,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.item{
-    border-bottom: solid 1px #f5f5f5;
-    margin-bottom: 10px;
-    padding: 10px;
-    &-title{
-        padding: 10px 0;
-        border-bottom: dashed 1px #f5f5f5;
-    }
-    &-content{
-        margin: 0 30px;
-        &-head{
-            margin: 10px 0;
-        }
-    }
-        
+.roleForm{
+    max-height: 300px;
+    overflow: auto;
 }
 .footer{
     margin-top: 30px;

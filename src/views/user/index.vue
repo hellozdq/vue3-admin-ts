@@ -14,7 +14,7 @@
         <el-table
             :data="tableData"
             border
-            style="width: 100%">
+            style="width: 100%;height:110%;">
             <el-table-column
             prop="name"
             label="姓名">
@@ -24,7 +24,6 @@
             label="手机">
             </el-table-column>
             <el-table-column
-            fixed="right"
             label="操作"
             width="100">
             <template #default="scope">
@@ -33,7 +32,7 @@
             </template>
             </el-table-column>
         </el-table>
-        <Pagination v-model:limit="searchForm.pageSize" v-model:page="searchForm.pageNum" :pageSizes="pageSizes" :total="total" @pagination="getPage"></Pagination>
+        <Pagination v-model:limit="searchForm.pageSize" v-model:page="searchForm.pageNum" :total="total" @pagination="getPage"></Pagination>
 
 
 
@@ -63,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, Ref, onMounted } from 'vue'
+import { defineComponent, ref, reactive, Ref } from 'vue'
 import RolesForm from './components/RolesForm.vue'
 import EditForm from './components/EditForm.vue'
 import Pagination from '@/components/Pagination/index.vue'
@@ -80,7 +79,7 @@ export default defineComponent({
         let tableData = ref([]);
 
         // 显示权限dialog
-        let dialogRolesVisible:Ref<boolean> = ref<boolean>(true);
+        let dialogRolesVisible:Ref<boolean> = ref<boolean>(false);
 
         // 显示修改dialog
         let dialogEditVisible:Ref<boolean> = ref<boolean>(false);
@@ -119,9 +118,6 @@ export default defineComponent({
         // 总数
         let total = ref(0);
 
-        // 
-        let pageSizes = reactive([10,20]);
-
         // 分页
         const getPage = (data:{page:number,limit:number}) => {
             searchForm.pageNum = data.page;
@@ -129,15 +125,12 @@ export default defineComponent({
             console.log(searchForm);
         }
 
-        onMounted(()=>{
-            onSearch();
-        })
+        onSearch();
 
         return { 
                 onSearch,
                 searchForm,
                 total,
-                pageSizes,
                 getPage,
                 tableData,
                 editRoles,
