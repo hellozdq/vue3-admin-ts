@@ -7,7 +7,7 @@
             <el-input v-model="form.phone" placeholder="请输入手机号码"></el-input>
         </el-form-item>
         <el-form-item label="">
-            <el-button size="medium" type="primary" @click="save">保 存</el-button>
+            <el-button size="medium" type="primary" @click="save" :loading="loading">保 存</el-button>
             <el-button size="medium" @click="cancel">取 消</el-button>
         </el-form-item>
     </el-form>
@@ -28,6 +28,9 @@ export default defineComponent({
         }
     },
     setup(props,context) {
+        // loading
+        const loading = ref(false);
+
         const obj = {
             id: props.userForm.id,
             name: props.userForm.name,
@@ -51,10 +54,14 @@ export default defineComponent({
         const save = () => {
             formRef.value.validate((valid:boolean) => {
                 if (valid) {
+                    loading.value = true;
                     updateUser(form).then(()=>{
-                        context.emit("onSearch");
-                        ElMessage.success("修改成功！")
+                        loading.value = false;
+                        ElMessage.success("修改成功！");
                         context.emit('update:dialogEditVisible',false);
+                        context.emit("onSearch");
+                    }).catch(()=>{
+                        loading.value = false;
                     })
                 } 
             });
@@ -71,7 +78,8 @@ export default defineComponent({
             formRef,
             rules,
             save,
-            cancel
+            cancel,
+            loading
         }
     },
 })

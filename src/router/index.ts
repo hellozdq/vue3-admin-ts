@@ -8,6 +8,7 @@ const Login = () => import('@/views/login/index.vue');
 
 import UserRouter from './modules/user';
 import AboutRouter from './modules/about';
+import RecordRouter from './modules/record';
 
 
 // 首页路由
@@ -66,7 +67,6 @@ export default createRouter({
                 },
             ]
         },
-        UserRouter,
         {
             path: '/login',
             component: Login,
@@ -79,5 +79,7 @@ export default createRouter({
 })
 
 export const asyncRouter = [
-    AboutRouter
+    UserRouter,
+    AboutRouter,
+    RecordRouter
 ]

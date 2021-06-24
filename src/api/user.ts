@@ -1,10 +1,10 @@
 import request from '@/common/request'
 
 export type ListForm = {
-    pageSize:number,
-    pageNum:number,
-    name:string,
-    phone:string
+    pageSize: number,
+    pageNum: number,
+    name: string,
+    phone: string
 }
 
 // 获取用户列表
@@ -16,15 +16,26 @@ export function getList(data:ListForm) {
     })
 }
 
-// 获取权限
+// 获取所有权限
 export function getRoles() {
   return request({
-    url: '/user/selectRoles',
+    url: '/user/roles',
     method: 'get'
   })
 }
 
-// updateRoles, UpdateRoleQuery
+// 根据用户id获取用户权限
+type userIdData = {
+    userId: number
+}
+export function getUserRoles(data: userIdData) {
+    return request({
+      url: '/user/rolesByUserId',
+      method: 'get',
+      params: data
+    })
+}
+
 
 export type UpdateRoleQuery = {
     userId:number,
@@ -32,10 +43,11 @@ export type UpdateRoleQuery = {
 }
 
 // 修改权限
-export function updateRoles(data:UpdateRoleQuery) {
+export function updateRole(data:UpdateRoleQuery) {
     return request({
-        url: '/user/updateRoles',
-        method: 'get'
+        url: '/user/updateRole',
+        method: 'put',
+        data
     })
 }
 
@@ -47,11 +59,20 @@ export type UpdateData = {
     phone: string
 }
 
-// 修改权限
+// 修改用户
 export function updateUser(data:UpdateData) {
     return request({
         url: '/user/updateUser',
         method: 'put',
+        data
+    })
+}
+
+// 删除用户
+export function deleteUser(data:number) {
+    return request({
+        url: '/user/deleteUser',
+        method: 'delete',
         data
     })
 }

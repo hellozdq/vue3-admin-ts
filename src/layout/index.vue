@@ -3,7 +3,7 @@
         <Sidebar/>
         <div class="content">
             <header-view/>
-            <div  class="content_main" >
+            <div class="content_main" >
                 <app-main/>
             </div>
         </div>

@@ -12,9 +12,14 @@
             </el-form-item>
         </el-form>
         <el-table
+            v-loading="loading"
             :data="tableData"
             border
             style="width: 100%;height:110%;">
+            <el-table-column
+            prop="account"
+            label="账号">
+            </el-table-column>
             <el-table-column
             prop="name"
             label="姓名">
@@ -25,10 +30,16 @@
             </el-table-column>
             <el-table-column
             label="操作"
-            width="100">
+            width="120">
             <template #default="scope">
-                <el-button @click="editRoles(scope.row)" type="text" size="small">权限</el-button>
+                <el-button @click="editRoles(scope.row)" :disabled="scope.row.roles==='admin'" type="text" size="small">权限</el-button>
                 <el-button @click="editUser(scope.row)" type="text" size="small">编辑</el-button>
+                <el-popconfirm title="确定删除吗？" @confirm="delUser(scope.row.id)">
+                    <template #reference>
+                        <el-button type="text" size="small">删除</el-button>
+                    </template>
+                </el-popconfirm>
+                
             </template>
             </el-table-column>
         </el-table>
@@ -42,8 +53,9 @@
             v-model="dialogRolesVisible"
             :close-on-click-modal="false"
             width="600px"
+            v-if="dialogRolesVisible"
             >
-            <roles-form v-model:dialogRolesVisible="dialogRolesVisible" :userId="1"></roles-form>
+            <roles-form v-model:dialogRolesVisible="dialogRolesVisible" :userForm="userForm" @onSearch="onSearch"></roles-form>
         </el-dialog>
     <!-- 权限 end -->
 
@@ -63,10 +75,11 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive, Ref } from 'vue'
+import { ElMessage } from 'element-plus';
 import RolesForm from './components/RolesForm.vue'
 import EditForm from './components/EditForm.vue'
 import Pagination from '@/components/Pagination/index.vue'
-import { getList,ListForm } from '@/api/user'
+import { getList,ListForm,deleteUser } from '@/api/user'
 
 export default defineComponent({
     components:{
@@ -78,6 +91,9 @@ export default defineComponent({
         // 表格数据
         let tableData = ref([]);
 
+        // loading
+        const loading = ref(false);
+
         // 显示权限dialog
         let dialogRolesVisible:Ref<boolean> = ref<boolean>(false);
 
@@ -85,8 +101,9 @@ export default defineComponent({
         let dialogEditVisible:Ref<boolean> = ref<boolean>(false);
 
         // 权限页面
-        const editRoles = () => {
+        const editRoles = (row) => {
             dialogRolesVisible.value = true;
+            userForm.value = {...row};
         };
         
         // 修改页面
@@ -98,11 +115,15 @@ export default defineComponent({
 
         // 查询
         const onSearch = () => {
+            loading.value = true;
             getList(searchForm)
             .then((res)=>{
+                loading.value = false;
                 const data = res.data;
                 tableData.value = data.list;
                 total.value = data.total;
+            }).catch((err)=>{
+                loading.value = false;
             })
         }
         
@@ -122,10 +143,26 @@ export default defineComponent({
         const getPage = (data:{page:number,limit:number}) => {
             searchForm.pageNum = data.page;
             searchForm.pageSize = data.limit;
-            console.log(searchForm);
         }
 
         onSearch();
+
+        // 删除
+        let isReq = false;
+        const delUser = (id:number) => {
+            if(isReq){
+                return;
+            }
+            console.log("========>>1")
+            isReq = true;
+            deleteUser(id).then((res) => {
+                ElMessage.success("删除成功！");
+                isReq = false;
+            }).catch(() => {
+                isReq = false;
+            })
+            console.log("----------1")
+        }
 
         return { 
                 onSearch,
@@ -135,9 +172,11 @@ export default defineComponent({
                 tableData,
                 editRoles,
                 editUser,
+                delUser,
                 dialogRolesVisible,
                 dialogEditVisible,
-                userForm
+                userForm,
+                loading
         }
     },
 })

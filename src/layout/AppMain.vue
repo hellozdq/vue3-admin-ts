@@ -33,5 +33,6 @@ export default defineComponent ({
 .main{
   background: #fff;
   height: 100%;
+  padding:10px;
 }
 </style>

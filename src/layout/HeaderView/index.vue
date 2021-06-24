@@ -12,7 +12,7 @@
         <div class="right">
             <el-dropdown class="drog">
                 <span class="el-dropdown-link">
-                    管理员<i class="el-icon-arrow-down el-icon--right"></i>
+                    {{name}}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
@@ -45,6 +45,8 @@ import { useStore } from "vuex"
 import HeadTags from "./HeadTags.vue"
 import { ElMessageBox, ElMessage } from 'element-plus';
 import EditPass from "@/views/user/components/EditPass.vue";
+
+import { cusLocalStorage } from '@/common'
 
 export default defineComponent({
     components:{
@@ -86,12 +88,16 @@ export default defineComponent({
                     type: 'warning'
             }).then(() => {
                 localStorage.removeItem('token');
-                localStorage.removeItem('accountId');
+                localStorage.removeItem('user');
                 router.replace('/login');
             }).catch(() => {
                 
             })
         }
+
+        // 名字显示
+        const user = cusLocalStorage.get('user');
+        const name = ref(user.name);
 
         return {
             isCollapse,
@@ -99,7 +105,8 @@ export default defineComponent({
             handleRefresh,
             dialogVisible,
             edit,
-            logOut
+            logOut,
+            name
         }
     }
 })

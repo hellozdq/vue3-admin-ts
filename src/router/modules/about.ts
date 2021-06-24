@@ -6,7 +6,7 @@ export default {
     meta:{
         title: "关于",
         icon:'el-icon-s-shop',
-        roles: ["admin"]
+        roles: [10]
     },
     children:[
         {
@@ -16,7 +16,7 @@ export default {
             meta:{
                 title: "关于列表",
                 icon:'el-icon-s-shop',
-                roles: ["admin"]
+                roles: [101]
             },
         },
     ]

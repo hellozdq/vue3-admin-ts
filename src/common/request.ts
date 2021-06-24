@@ -15,6 +15,8 @@ let loadingInstance:any
 // request interceptor
 service.interceptors.request.use(
   (config:any) => {
+    console.log("config.isLoading---------")
+    console.log("config.isLoading")
     // do something before request is sent
     if (config.isLoading) {
       loadingInstance = ElLoading.service({

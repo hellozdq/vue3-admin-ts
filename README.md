@@ -190,6 +190,8 @@ resolve.extensions
 
 8. 添加动态路由(权限处理)
 
+9. 完成权限
+
 ### 添加依赖导出scss
  [how-to-share-variables-between-js-and-sass](https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass)
  yarn add sass-loader node-sass  --save-dev

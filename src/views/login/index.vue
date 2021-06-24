@@ -9,7 +9,7 @@
                 <el-input type="password" v-model="loginForm.password" placeholder="请输入密码" autocomplete="off" show-password></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button class="btn" type="primary" @click="submitForm">登 陆</el-button>
+                <el-button :loading="loading" class="btn" type="primary" @click="submitForm">登 陆</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -44,24 +44,35 @@ export default defineComponent({
             if(formRef){
                 formRef.value.validate( async (valid:boolean) => {
                     if (valid) {
-                        const { data:publicKey }:{ data:string } = await getPublicKey();
-                        const jsencrypt = new JSEncrypt({})  // 创建加密对象实例
-                        jsencrypt.setPublicKey(publicKey)//设置公钥
-                        let password = jsencrypt.encrypt(loginForm.password)||'';
-                        const { data } = await toLogin({account:loginForm.account,password});
-                        cusLocalStorage.set('token',data.token)
-                        cusLocalStorage.set('accountId',data.id)
-                        router.push("/");
+                        loading.value = true;
+                        try{
+                            const { data:publicKey }:{ data:string } = await getPublicKey();
+                            const jsencrypt = new JSEncrypt({})  // 创建加密对象实例
+                            jsencrypt.setPublicKey(publicKey)//设置公钥
+                            let password = jsencrypt.encrypt(loginForm.password)||'';
+                            const { data } = await toLogin({account:loginForm.account,password});
+                            cusLocalStorage.set('token',data.token);
+                            cusLocalStorage.set('user',{id:data.id,userId:data.userId,name:data.name});
+                            loading.value = false;
+                            router.push("/");
+                        }catch{
+                            loading.value = false;
+                        }
+                        
                     }
                 });
             }
             
         }
+
+        const loading = ref(false);
+
         return {
             formRef,
             rules,
             loginForm,
-            submitForm
+            submitForm,
+            loading
         }
     }
 })

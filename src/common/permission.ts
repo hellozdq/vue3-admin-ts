@@ -1,5 +1,5 @@
 // 筛选路由
-export const filterRoutes = (routes,roles:Array<string>) => {
+export const filterRoutes = (routes,roles:Array<number|string>) => {
     const results:Array<object> = [];
     routes.forEach(item => {
         const route = { ...item };
@@ -14,7 +14,7 @@ export const filterRoutes = (routes,roles:Array<string>) => {
 }
 
 // 判断是否两个数组是有交集存在
-const isExist = (routeRoles:Array<string>,roles:Array<string>) => {
+const isExist = (routeRoles:Array<number|string>,roles:Array<number|string>) => {
     const isHave = routeRoles.some(item => roles.includes(item));
     return isHave;
 }

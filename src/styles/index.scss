@@ -13,3 +13,10 @@ p{
     text-decoration: none;
 }
 
+/* 清除浏览器记忆功能填充颜色问题 */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill{
+  box-shadow: 0 0 0 1000px #fff inset !important;
+}
+
