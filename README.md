@@ -1,5 +1,46 @@
 
-## yarn create @vitejs/app 创建vue+typescirpt 项目
+## yarn create @vitejs/app 创建vue3+typescript 项目
+#### vue3全局桶 + typescript + elementui
+
++ api 所有接口
++ assets  静态文件
++ common 公共ts
+  - auth 增删token
+  - directives 拖拽指令（需修改）
+  - index 公共方法
+  - permission 权限方法
+  - regexp 所有的正则
+  - request 请求 
+  - scroll-to 页面变化方法（需修改）
++ components 公共组件
+  - Pagination 分页
++ layout 布局
+  - HeaderView 头部
+    * HeadTags 头部标签栏
+    * index 显示头部其他和组合头部标签栏
+  - Sidebar 侧边栏
+    * index 所有侧边栏
+    * SidebarItem 子侧边栏组件
+  - AppMain 主要内容路由页面（包括处理页面缓存）
+  - index 组合所有布局（包括初始化头部标签栏）
++ router 路由
++ store vuex
++ views 路由页面
++ APP 主页面
++ main 创建和配置vue
++ permission 权限
++ shims-vue vue 的ts配置
++ vite-env vite 的ts配置
++ .env.development 开发环境配置
++ .env.production 生产环境配置
++ .gitignore git
++ index.html 总页面
++ package-lock package
++ README.md 文档
++ tsconfig.json ts配置
++ vite.config.ts vite配置
++ yarn-error.log
++ yarn.lock
 
 ### 在src添加views 文件
 views 添加home/index.vue 
@@ -190,8 +231,6 @@ resolve.extensions
 
 8. 添加动态路由(权限处理)
 
-9. 完成权限
-
 ### 添加依赖导出scss
  [how-to-share-variables-between-js-and-sass](https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass)
  yarn add sass-loader node-sass  --save-dev
@@ -203,18 +242,8 @@ yarn add --dev eslint eslint-plugin-vue @typescript-eslint/parser @typescript-es
 prettier-eslint eslint-config-prettier
 
 
-存在的问题 
-1. 浏览器无法使用requirst\path.resolve(暂时写了个方法connectPath替代)
-2. eslint 用不了、 引入scss 到js 用不了
-3. axios  AxiosRequestConfig 不存在loading 
-4. el-dialog 使用指令失效
 
-5. const formRef = ref<any>(null); ref 的typesrcipt 类型
-formRef.value.validate
-(property) Ref<HTMLElement | null>.value: HTMLElement | null
-Object is possibly 'null'.
 
-暂时使用any
 
 
 
@@ -223,6 +252,7 @@ yarn add jsencrypt --dep
 
 ### 设置变量
 [https://blog.csdn.net/chendf__/article/details/115676683](https://blog.csdn.net/chendf__/article/details/115676683)
+
 # 安装cross-env
 yarn add cross-env dotenv -D
 根目录创建 
@@ -243,18 +273,25 @@ try {
 } catch (e) {
   console.error(e)
 }
+
+ts 中访问 process is not defined
 ```
 
-### 问题
-.vue 没法访问 process 
-process.env
+#### 存在的问题 
+1. 浏览器无法使用requirst\path.resolve(暂时写了个方法connectPath替代)
+2. eslint 用不了、 引入scss 到js 用不了
+3. axios  AxiosRequestConfig 不存在loading 
+4. el-dialog 使用指令失效
+
+5. const formRef = ref<any>(null); ref 的typesrcipt 类型
+formRef.value.validate
+(property) Ref<HTMLElement | null>.value: HTMLElement | null
+Object is possibly 'null'.
+
+6. .ts 中访问 process   process is not defined
+暂时使用any
 
 
-
-
-
-### 需要优化的 
-1. 表格的大小需要调小些边距
 
 
 
