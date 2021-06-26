@@ -5,7 +5,7 @@ export default {
     component: Layout,
     meta:{
         title: "关于",
-        icon:'el-icon-s-shop',
+        icon:'el-icon-s-cooperation',
         roles: [10]
     },
     children:[
@@ -15,7 +15,7 @@ export default {
             name:"About",
             meta:{
                 title: "关于列表",
-                icon:'el-icon-s-shop',
+                icon:'el-icon-s-cooperation',
                 roles: [101]
             },
         },

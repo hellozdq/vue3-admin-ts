@@ -6,7 +6,7 @@ export default {
     component: Layout,
     meta:{
         title: '记录',
-        icon:'el-icon-s-shop',
+        icon:'el-icon-s-order',
         roles: [11]
     },
     children:[
@@ -16,7 +16,7 @@ export default {
             name:'Record',
             meta:{
                 title: '记录列表',
-                icon:'el-icon-s-shop',
+                icon:'el-icon-s-order',
                 roles: [111]
             },
         },
@@ -26,7 +26,7 @@ export default {
             name:'RecordSet',
             meta:{
                 title: '记录设置',
-                icon:'el-icon-s-shop',
+                icon:'el-icon-s-order',
                 roles: [112]
             },
         }

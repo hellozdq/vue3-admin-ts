@@ -5,7 +5,7 @@ export default {
     component: Layout,
     meta:{
         title: "用户",
-        icon:'el-icon-s-shop',
+        icon:'el-icon-s-custom',
         roles: ["admin"]
     },
     children:[
@@ -15,7 +15,7 @@ export default {
             name:"Roles",
             meta:{
                 title: "用户列表",
-                icon:'el-icon-s-shop',
+                icon:'el-icon-s-custom',
                 roles: ["admin"]
             },
         },

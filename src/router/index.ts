@@ -62,7 +62,7 @@ export default createRouter({
                     name:"Home",
                     meta:{
                         title: "主页",
-                        icon: "el-icon-s-shop"
+                        icon: "el-icon-s-home"
                     },
                 },
             ]
