@@ -2,10 +2,10 @@
     <div class="user">
         <el-form :inline="true" :model="searchForm" size="small" class="headerForm">
             <el-form-item>
-                <el-input style="width:120px;" v-model="searchForm.name" placeholder="请输入姓名"></el-input>
+                <el-input style="width:120px;" v-model="searchForm.name" placeholder="姓名查询"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-input style="width:150px;" v-model="searchForm.phone" placeholder="请输入手机"></el-input>
+                <el-input style="width:150px;" v-model="searchForm.phone" placeholder="手机查询"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSearch">查询</el-button>
@@ -15,6 +15,7 @@
             v-loading="loading"
             :data="tableData"
             border
+            max-height="380px"
             style="width: 100%;height:110%;">
             <el-table-column
             prop="account"
@@ -31,12 +32,12 @@
             <el-table-column
             label="操作"
             width="120">
-            <template #default="scope">
-                <el-button @click="editRoles(scope.row)" :disabled="scope.row.roles==='admin'" type="text" size="small">权限</el-button>
-                <el-button @click="editUser(scope.row)" type="text" size="small">编辑</el-button>
-                <el-popconfirm title="确定删除吗？" @confirm="delUser(scope.row.id)">
+            <template #default="{row}">
+                <el-button @click="editRoles(row)" :disabled="row.roles==='admin'" type="text" size="small">权限</el-button>
+                <el-button @click="editUser(row)" type="text" size="small">编辑</el-button>
+                <el-popconfirm title="确定删除吗？" @confirm="delUser(row.id,row.accountId)">
                     <template #reference>
-                        <el-button type="text" size="small">删除</el-button>
+                        <el-button type="text" :disabled="row.roles==='admin'" size="small">删除</el-button>
                     </template>
                 </el-popconfirm>
                 
@@ -74,17 +75,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, Ref } from 'vue'
+import { defineComponent, defineAsyncComponent,ref, reactive, Ref } from 'vue'
 import { ElMessage } from 'element-plus';
-import RolesForm from './components/RolesForm.vue'
-import EditForm from './components/EditForm.vue'
+const RolesForm = () => import('./components/RolesForm.vue');
+const EditForm = () => import('./components/EditForm.vue');
 import Pagination from '@/components/Pagination/index.vue'
 import { getList,ListForm,deleteUser } from '@/api/user'
 
 export default defineComponent({
     components:{
-        RolesForm,
-        EditForm,
+        RolesForm: defineAsyncComponent(RolesForm),
+        EditForm: defineAsyncComponent(EditForm),
         Pagination
     },
     setup(){
@@ -148,20 +149,19 @@ export default defineComponent({
         onSearch();
 
         // 删除
-        let isReq = false;
-        const delUser = (id:number) => {
+        let isReq = false; //防止重复请求
+        const delUser = (id:number,accountId:number) => {
             if(isReq){
                 return;
             }
-            console.log("========>>1")
             isReq = true;
-            deleteUser(id).then((res) => {
+            deleteUser({id:id,accountId:accountId}).then((res) => {
                 ElMessage.success("删除成功！");
+                onSearch();
                 isReq = false;
             }).catch(() => {
                 isReq = false;
             })
-            console.log("----------1")
         }
 
         return { 
@@ -184,7 +184,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .user{
-    padding: 15px;
     .headerForm{
         text-align: right;
     }
