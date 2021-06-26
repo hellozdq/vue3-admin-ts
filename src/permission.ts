@@ -5,10 +5,8 @@ import { filterRoutes } from '@/common/permission'
 import { cusLocalStorage } from '@/common/index';
 import store from '@/store/index'
 
-cusLocalStorage.set('router',true);//判断是否添加了路由
+cusLocalStorage.set('router',true); //判断是否添加了路由
 const whiteList = ['/login']; //白名单
-console.log(router.options)
-console.log({...router.options})
 
 router.beforeEach(async (to, from, next) => {
     if(whiteList.includes(to.path)){
@@ -25,9 +23,13 @@ router.beforeEach(async (to, from, next) => {
 
         // 动态路由添加
         let routes:any = [];
-        routes = filterRoutes(asyncRouter,roles);
+        if(roles[0] == 'admin'){
+            routes = asyncRouter;
+        }else{
+            routes = filterRoutes([...asyncRouter],roles);
+        }
         for(let i in routes){
-            router.addRoute(asyncRouter[i]);
+            router.addRoute(routes[i]);
         }
         router.options.routes = router.options.routes.concat(routes);
         cusLocalStorage.set("router",false);
