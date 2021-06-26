@@ -69,7 +69,7 @@ export function updateUser(data:UpdateData) {
 }
 
 // 删除用户
-export function deleteUser(data:number) {
+export function deleteUser(data:object) {
     return request({
         url: '/user/deleteUser',
         method: 'delete',
