@@ -1,7 +1,20 @@
 
 <template>
 <div class="sidebar">
-  <div class="logo">logo</div>
+  <div class="logo">
+    <el-image 
+      v-if="!isCollapse"
+      style="width: 200px; height: 64px;"
+      src="/src/assets/images/logo.png"
+      fit="fit">
+    </el-image>
+    <el-image
+    v-else
+      style="width: 64px; height: 64px;"
+      src="/src/assets/images/logo2.png"
+      fit="fit">
+    </el-image>
+  </div>
   <el-menu 
       :background-color="variables.menuBg"
       :text-color="variables.menuText"
@@ -58,12 +71,11 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   .logo{
-    height: 50px;
-    border-right: solid 1px #e6e6e6;
-    padding: 10px;
+    height: 64px;
   }
   .menu{
     flex: 1;
+    border:none;
   }
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
