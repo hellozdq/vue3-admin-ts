@@ -1,7 +1,12 @@
 
-## yarn create @vitejs/app 创建vue3+typescript 项目
-#### vue3全局桶 + typescript + elementui
+## vue3全局桶 + typescript + elementui 搭建后台管理系统
 
+### 拉取使用
+1. git clone https://github.com/hellozdq/vue3-admin-ts.git 拉取项目
+2. yarn 安装依赖
+3. yarn run dev 运行
+
+### 结构
 + api 所有接口
 + assets  静态文件
 + common 公共ts
@@ -42,11 +47,15 @@
 + yarn-error.log
 + yarn.lock
 
+
+###  创建项目
++ yarn create @vitejs/app 创建vue3+typescript 项目
+
 ### 在src添加views 文件
-views 添加home/index.vue 
++ views 添加home/index.vue 
 
 ### 添加router
-yarn add vue-router@next -D
++ yarn add vue-router@next -D
 
 1. 建立路由
 ```
