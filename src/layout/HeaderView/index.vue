@@ -31,6 +31,7 @@
         v-model="dialogVisible"
         :close-on-click-modal="false"
         width="500px"
+        v-if="dialogVisible"
         >
         <edit-pass v-model:dialogVisible="dialogVisible" :userId="1"></edit-pass>  
     </el-dialog>
@@ -38,20 +39,20 @@
 </template>
 
 <script>
-import { defineComponent, computed, ref } from "vue";
-import { useRouter,useRoute } from "vue-router"
-import { useStore } from "vuex"
+import { defineComponent, computed, ref, defineAsyncComponent } from 'vue';
+import { useRouter,useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 
-import HeadTags from "./HeadTags.vue"
+import HeadTags from './HeadTags.vue'
 import { ElMessageBox, ElMessage } from 'element-plus';
-import EditPass from "@/views/user/components/EditPass.vue";
+const EditPass = () => import('@/views/user/components/EditPass.vue');
 
 import { cusLocalStorage } from '@/common'
 
 export default defineComponent({
     components:{
         HeadTags,
-        EditPass
+        EditPass: defineAsyncComponent(EditPass)
     },
     setup(){
         const store = useStore();
@@ -116,7 +117,7 @@ export default defineComponent({
 .head{
     display: flex;
     justify-content: space-between;
-    height: 50px;
+    height: 64px;
     flex-shrink: 0;
     .left{
         display: flex;
