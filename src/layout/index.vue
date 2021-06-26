@@ -30,9 +30,9 @@ export default defineComponent ({
         const route = useRoute();
         const router = useRouter();
         const store = useStore();
+        // 初始化tags
         const homePath = localStorage.getItem('homePath') || '';
-        store.dispatch("layout/add_tagViews",router.resolve(homePath));
-        store.dispatch("layout/add_tagViews",router.resolve(route.path == '/' ? homePath : route.path));
+        store.dispatch("layout/start_tagViews",{home:router.resolve(homePath),current:router.resolve(route.path == '/' ? homePath : route.path)});
         // 监听路由变化 每次变化添加一次tag;
         watch(() => route.path,()=>{
             if(route.meta && route.meta.noShowTag){
@@ -54,10 +54,12 @@ export default defineComponent ({
         display: flex;
         flex-direction: column;
         flex: 1;
+        overflow: hidden;
         padding: 0 10px;
         &_main{
             background: #f5f5f5;
-            padding: 10px;
+            padding: 15px;
+            box-sizing: border-box;
             flex: 1;
         }
     }

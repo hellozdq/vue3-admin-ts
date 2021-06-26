@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent,ref, watch, toRaw } from "vue";
+import { computed, defineComponent,ref, watch } from "vue";
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -69,10 +69,9 @@ export default defineComponent({
 
         // 关闭当前页
         const closeCurrent = () => {
-            if(tagViews.value.length>1){
+            if(tagViews.value.length > 1){
                 removeTab(route.path);
             }
-            
         }
 
         // 关闭其他页

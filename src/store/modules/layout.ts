@@ -33,6 +33,10 @@ const mutations = {
     })
     state.tagViews.splice(index,1);
   },
+  // 清除
+  CLEAR_TAGVIEWS: () => {
+    state.tagViews = [];
+  },
 
   // 添加缓存
   ADD_CACHES: (state:state, data:string) => {
@@ -68,6 +72,12 @@ const actions = {
     commit("REMOVE_TAGVIEWS",data);
     commit("REMOVE_CACHES",data.name);
   },
+  start_tagViews:({ commit,dispatch }, data:any) => {
+    commit("CLEAR_TAGVIEWS");
+    dispatch("add_tagViews",data.home);
+    data.current && dispatch("add_tagViews",data.current);
+  },
+
   // 添加缓存
   add_caches:({ commit }, data:string)=>{
     commit("ADD_CACHES",data);
