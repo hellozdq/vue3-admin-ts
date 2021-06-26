@@ -13,7 +13,7 @@
             <el-input v-model="form.newPassword2" type="password" placeholder="请再次输入新密码"></el-input>
         </el-form-item>
         <el-form-item label="">
-            <el-button size="medium" type="primary" @click="save">保 存</el-button>
+            <el-button size="medium" type="primary" @click="save" :loading="loading">保 存</el-button>
             <el-button size="medium" @click="cancel">取 消</el-button>
         </el-form-item>
     </el-form>
@@ -25,12 +25,16 @@ import { ElMessage } from 'element-plus';
 import JSEncrypt from 'jsencrypt'
 
 import { updatePassword, UpdataData, getPublicKey } from '@/api/login'
+import { cusLocalStorage } from '@/common';
+
+const user = cusLocalStorage.get("user");
+console.log(user)
 
 export default defineComponent({
     setup(props,context) {
         const form:UpdataData = reactive({
-            id:0,
-            account:'',
+            id:user.id,
+            account:user.account,
             password:'',
             newPassword:'',
             newPassword2:''
@@ -47,18 +51,20 @@ export default defineComponent({
         // 规则
         const rules = {
             password: [
-                { required: true, message: '原密码不能为空', trigger: 'blur' }
+                { required: true, message: '原密码不能为空', trigger: 'change' }
             ],
             newPassword: [
-                { required: true, message: '新密码不能为空', trigger: 'blur' }
+                { required: true, message: '新密码不能为空', trigger: 'change' }
             ],
             newPassword2: [
-                { required: true, message: '请再次输入密码', trigger: 'blur' },
+                { required: true, message: '请再次输入密码', trigger: 'change' },
                 { validator: validatePass2, trigger: 'blur' }
             ]
         }
 
         const formRef = ref<any>(null);
+
+        const loading = ref<boolean>(false);
 
         // 保存
         const save = () => {
@@ -70,9 +76,13 @@ export default defineComponent({
                     jsencrypt.setPublicKey(publicKey)//设置公钥
                     const password = jsencrypt.encrypt(form.password)||'';
                     const newPassword = jsencrypt.encrypt(form.newPassword)||'';
+                    loading.value = true;
                     updatePassword({ id, password, newPassword }).then(()=>{
                         ElMessage.success("修改成功！")
-                        context.emit('update:dialogPassVisible',false);
+                        context.emit('update:dialogVisible',false);
+                        loading.value = false;
+                    }).catch(() => {
+                        loading.value = false;
                     })
                 }
             })
@@ -81,14 +91,16 @@ export default defineComponent({
         
         // 取消
         const cancel = () => {
-            context.emit('update:dialogPassVisible',false);
+            context.emit('update:dialogVisible',false);
         }
 
         return {
             form,
             rules,
             save,
-            cancel
+            cancel,
+            formRef,
+            loading
         }
     },
 })
