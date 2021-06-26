@@ -34,5 +34,6 @@ export default defineComponent ({
   background: #fff;
   height: 100%;
   padding:10px;
+  box-sizing: border-box;
 }
 </style>
