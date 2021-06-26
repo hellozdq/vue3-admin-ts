@@ -4,6 +4,8 @@ import store from '@/store'
 import router from '@/router'
 import { getToken } from './auth'
 
+// console.log(process.env);
+
 // create an axios instance
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
