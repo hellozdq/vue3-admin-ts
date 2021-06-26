@@ -9,7 +9,7 @@
                 <el-input type="password" v-model="loginForm.password" placeholder="请输入密码" autocomplete="off" show-password></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button :loading="loading" class="btn" type="primary" @click="submitForm">登 陆</el-button>
+                <el-button :loading="loading" class="btn" type="primary" @click="onLogin">登 陆</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -17,15 +17,24 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue';
-import { useRouter } from 'vue-router'
-import JSEncrypt from 'jsencrypt'
+import { useRouter } from 'vue-router';
+import JSEncrypt from 'jsencrypt';
+import { useStore } from 'vuex'
 
-import { cusLocalStorage } from '@/common'
+import { cusLocalStorage } from '@/common';
 
-import { toLogin, getPublicKey, LoginForm  } from '@/api/login'
+import { toLogin, getPublicKey, LoginForm  } from '@/api/login';
 
 export default defineComponent({
     setup(){
+        const router = useRouter();
+        const store = useStore();
+
+        // 初始化tags
+        const homePath = localStorage.getItem('homePath') || '';
+        store.dispatch("layout/start_tagViews",{home:router.resolve(homePath)});
+
+        // 验证
         const rules = {
             account: [
                 { required: true, message: '请输入账号', trigger: 'blur' }
@@ -39,8 +48,9 @@ export default defineComponent({
             password:''
         })
         const formRef:any = ref<Document|null>(null);
-        const router = useRouter();
-        const submitForm = () => {
+
+        // 登陆
+        const onLogin = () => {
             if(formRef){
                 formRef.value.validate( async (valid:boolean) => {
                     if (valid) {
@@ -49,10 +59,16 @@ export default defineComponent({
                             const { data:publicKey }:{ data:string } = await getPublicKey();
                             const jsencrypt = new JSEncrypt({})  // 创建加密对象实例
                             jsencrypt.setPublicKey(publicKey)//设置公钥
-                            let password = jsencrypt.encrypt(loginForm.password)||'';
-                            const { data } = await toLogin({account:loginForm.account,password});
+                            let password = jsencrypt.encrypt(loginForm.password) || '';
+                            const { data } = await toLogin({account: loginForm.account, password});
+                            // 存储数据
                             cusLocalStorage.set('token',data.token);
-                            cusLocalStorage.set('user',{id:data.id,userId:data.userId,name:data.name});
+                            cusLocalStorage.set('user', {   
+                                                id: data.id,
+                                                userId: data.userId,
+                                                account: data.account,
+                                                name: data.name
+                                            });
                             loading.value = false;
                             router.push("/");
                         }catch{
@@ -71,7 +87,7 @@ export default defineComponent({
             formRef,
             rules,
             loginForm,
-            submitForm,
+            onLogin,
             loading
         }
     }
