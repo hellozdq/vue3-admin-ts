@@ -73,7 +73,7 @@ export default defineComponent({
             context.emit("update:dialogRolesVisible",false);
         }
 
-        const oldRoles = props.userForm.roles.split(",").map((item)=>{
+        const oldRoles = (props.userForm.roles ? props.userForm.roles.split(",") : []).map((item)=>{
             return Number(item);
         });
         console.log(oldRoles)
