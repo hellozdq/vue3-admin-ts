@@ -17,8 +17,6 @@ let loadingInstance:any
 // request interceptor
 service.interceptors.request.use(
   (config:any) => {
-    console.log("config.isLoading---------")
-    console.log("config.isLoading")
     // do something before request is sent
     if (config.isLoading) {
       loadingInstance = ElLoading.service({
@@ -30,7 +28,6 @@ service.interceptors.request.use(
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
       config.headers['token'] = getToken();
-      console.log(getToken);
     }
     return config
   },
