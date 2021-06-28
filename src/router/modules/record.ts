@@ -21,7 +21,7 @@ export default {
             },
         },
         {
-            path: '/set',
+            path: 'set',
             component: RecordSet,
             name:'RecordSet',
             meta:{
