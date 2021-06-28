@@ -5,13 +5,13 @@
     <el-image 
       v-if="!isCollapse"
       style="width: 200px; height: 64px;"
-      src="/src/assets/images/logo.png"
+      :src="logo"
       fit="fit">
     </el-image>
     <el-image
     v-else
       style="width: 64px; height: 64px;"
-      src="/src/assets/images/logo2.png"
+      :src="logo2"
       fit="fit">
     </el-image>
   </div>
@@ -45,6 +45,9 @@ import router from "@/router/index"
 
 import SidebarItem from './SidebarItem.vue'
 
+import logo from '@/assets/images/logo.png'
+import logo2 from '@/assets/images/logo2.png'
+
 import color from '@/common/color'
 export default defineComponent({
   components:{
@@ -61,7 +64,7 @@ export default defineComponent({
       const menus = router.options.routes;
       const variables = reactive(color);
 
-      return {isCollapse, menus, route, variables}
+      return {isCollapse, menus, route, variables, logo, logo2}
   }
 })
 </script>
