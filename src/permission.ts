@@ -26,13 +26,13 @@ router.beforeEach(async (to, from, next) => {
         if(roles[0] == 'admin'){
             routes = asyncRouter;
         }else{
-            routes = filterRoutes([...asyncRouter],roles);
+            routes = filterRoutes([...asyncRouter], roles);
         }
         for(let i in routes){
             router.addRoute(routes[i]);
         }
         router.options.routes = router.options.routes.concat(routes);
-        cusLocalStorage.set("router",false);
+        cusLocalStorage.set("router", false);
         next({ ...to, replace: true });
     }else{
         next()

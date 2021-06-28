@@ -1,10 +1,11 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 
 const Layout = () => import('@/layout/index.vue');
 const Home = () => import('@/views/home/index.vue');
 const Redirect = () => import('@/views/redirect/index.vue');
 const Login = () => import('@/views/login/index.vue');
+const NotPage = () => import('@/views/404.vue');
 
 import UserRouter from './modules/user';
 import AboutRouter from './modules/about';
@@ -29,7 +30,7 @@ meta: 自定义属性
     roles:["admin"] //权限
 */
 export default createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes: [
         {
         path: '/redirect',
@@ -75,6 +76,13 @@ export default createRouter({
                 noShowTag:true
             }
         },
+        {
+            path: '/:pathMatch(.*)',
+            component: NotPage,
+            meta:{
+                hidden: true
+            }
+        }
     ]
 })
 

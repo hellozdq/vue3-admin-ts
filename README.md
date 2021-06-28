@@ -286,6 +286,9 @@ try {
 ts 中访问 process is not defined
 ```
 
+### 路由404
+[https://next.router.vuejs.org/guide/migration/#removal-of-the-fallback-option](https://next.router.vuejs.org/guide/migration/#removal-of-the-fallback-option)
+
 #### 存在的问题 
 1. 浏览器无法使用requirst\path.resolve(暂时写了个方法connectPath替代)
 2. eslint 用不了、 引入scss 到js 用不了
