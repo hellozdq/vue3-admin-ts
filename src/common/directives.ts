@@ -1,10 +1,10 @@
-
 // v-dialogDrag: 弹窗拖拽属性 （重点！！！ 给模态框添加这个属性模态框就能拖拽了）
-export default { // 属性名称dialogDrag，前面加v- 使用
+export default {
+  // 属性名称dialogDrag，前面加v- 使用
   beforeMount(el, binding, vnode, oldVnode) {
     console.log('---------------------------11')
-    console.log("el------------------")
-    console.log("el")
+    console.log('el------------------')
+    console.log('el')
     console.log(el)
     return
     const dialogHeaderEl = el.querySelector('.el-dialog__header')
@@ -14,7 +14,7 @@ export default { // 属性名称dialogDrag，前面加v- 使用
     dragDom.style.cssText += ';top:0px;'
 
     // 获取原有属性 ie dom元素.currentStyle 火狐谷歌 window.getComputedStyle(dom元素, null);
-    const sty = (function() {
+    const sty = (function () {
       if (window.document.currentStyle) {
         return (dom, attr) => dom.currentStyle[attr]
       } else {
@@ -52,20 +52,20 @@ export default { // 属性名称dialogDrag，前面加v- 使用
         styT = +styT.replace(/\px/g, '')
       }
 
-      document.onmousemove = function(e) {
+      document.onmousemove = function (e) {
         // 通过事件委托，计算移动的距离
         let left = e.clientX - disX
         let top = e.clientY - disY
 
         // 边界处理
-        if (-(left) > minDragDomLeft) {
-          left = -(minDragDomLeft)
+        if (-left > minDragDomLeft) {
+          left = -minDragDomLeft
         } else if (left > maxDragDomLeft) {
           left = maxDragDomLeft
         }
 
-        if (-(top) > minDragDomTop) {
-          top = -(minDragDomTop)
+        if (-top > minDragDomTop) {
+          top = -minDragDomTop
         } else if (top > maxDragDomTop) {
           top = maxDragDomTop
         }
@@ -74,7 +74,7 @@ export default { // 属性名称dialogDrag，前面加v- 使用
         dragDom.style.cssText += `;left:${left + styL}px;top:${top + styT}px;`
       }
 
-      document.onmouseup = function(e) {
+      document.onmouseup = function (e) {
         document.onmousemove = null
         document.onmouseup = null
       }

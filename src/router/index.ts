@@ -1,20 +1,18 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from 'vue-router'
 
+const Layout = () => import('@/layout/index.vue')
+const Home = () => import('@/views/home/index.vue')
+const Redirect = () => import('@/views/redirect/index.vue')
+const Login = () => import('@/views/login/index.vue')
+const NotPage = () => import('@/views/404.vue')
 
-const Layout = () => import('@/layout/index.vue');
-const Home = () => import('@/views/home/index.vue');
-const Redirect = () => import('@/views/redirect/index.vue');
-const Login = () => import('@/views/login/index.vue');
-const NotPage = () => import('@/views/404.vue');
-
-import UserRouter from './modules/user';
-import AboutRouter from './modules/about';
-import RecordRouter from './modules/record';
-
+import UserRouter from './modules/user'
+import AboutRouter from './modules/about'
+import RecordRouter from './modules/record'
 
 // 首页路由
-const homePath = '/home';
-localStorage.setItem('homePath',homePath);
+const homePath = '/home'
+localStorage.setItem('homePath', homePath)
 
 /* 
 routes 
@@ -30,64 +28,60 @@ meta: 自定义属性
     roles:["admin"] //权限
 */
 export default createRouter({
-    history: createWebHashHistory(),
-    routes: [
+  history: createWebHashHistory(),
+  routes: [
+    {
+      path: '/redirect',
+      component: Layout,
+      meta: {
+        hidden: true
+      },
+      children: [
         {
-        path: '/redirect',
-        component: Layout,
-        meta:{
-            hidden: true,
-        },
-        children: [
-                {
-                    path: '/redirect/:path*',
-                    name:'Redirect',
-                    component: Redirect,
-                    meta:{
-                        noShowTag:true
-                    }
-                }
-            ]
-        },
-        {
-            path: '/',
-            component: Layout,
-            redirect:homePath,
-            meta:{
-                hiddenParent:true
-            },
-            children:[
-                {
-                    path: homePath,
-                    component:Home,
-                    name:"Home",
-                    meta:{
-                        title: "主页",
-                        icon: "el-icon-s-home"
-                    },
-                },
-            ]
-        },
-        {
-            path: '/login',
-            component: Login,
-            meta:{
-                hidden: true,
-                noShowTag:true
-            }
-        },
-        {
-            path: '/:pathMatch(.*)',
-            component: NotPage,
-            meta:{
-                hidden: true
-            }
+          path: '/redirect/:path*',
+          name: 'Redirect',
+          component: Redirect,
+          meta: {
+            noShowTag: true
+          }
         }
-    ]
+      ]
+    },
+    {
+      path: '/',
+      component: Layout,
+      redirect: homePath,
+      meta: {
+        hiddenParent: true
+      },
+      children: [
+        {
+          path: homePath,
+          component: Home,
+          name: 'Home',
+          meta: {
+            title: '主页',
+            icon: 'el-icon-s-home'
+          }
+        }
+      ]
+    },
+    {
+      path: '/login',
+      component: Login,
+      meta: {
+        hidden: true,
+        noShowTag: true
+      }
+    },
+    {
+      path: '/:pathMatch(.*)',
+      component: NotPage,
+      meta: {
+        hidden: true
+      }
+    }
+  ]
 })
 
-export const asyncRouter = [
-    UserRouter,
-    AboutRouter,
-    RecordRouter
-]
+export const asyncRouter = [UserRouter, AboutRouter, RecordRouter]

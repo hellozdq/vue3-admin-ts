@@ -1,20 +1,20 @@
 type state = {
-    name:string
+  name: string
 }
 
-const state:state = {
-    name:'storeName'
+const state: state = {
+  name: 'storeName'
 }
 
 const mutations = {
-  SET_NAME: (state:state,name:string) => {
-      state.name = name
+  SET_NAME: (state: state, name: string) => {
+    state.name = name
   }
 }
 
 const actions = {
-  setName:({ commit }, name:string)=>{
-    commit("SET_NAME",name)
+  setName: ({ commit }, name: string) => {
+    commit('SET_NAME', name)
   }
 }
 

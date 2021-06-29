@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { ElMessageBox, ElMessage, ElLoading } from 'element-plus'
-import store from '@/store'
+// import store from '@/store'
 import router from '@/router'
 import { getToken } from './auth'
 
@@ -13,10 +13,10 @@ const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 30000 // request timeout
 })
-let loadingInstance:any
+let loadingInstance: any
 // request interceptor
 service.interceptors.request.use(
-  (config:any) => {
+  (config: any) => {
     // do something before request is sent
     if (config.isLoading) {
       loadingInstance = ElLoading.service({
@@ -27,11 +27,11 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['token'] = getToken();
+      config.headers['token'] = getToken()
     }
     return config
   },
-  error => {
+  (error) => {
     console.log(error) // for debug
     return Promise.reject(error)
   }
@@ -42,14 +42,14 @@ service.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
    * Please return  response => response
-  */
+   */
 
   /**
    * Determine the request status by custom code
    * Here is just an example
    * You can also judge the status by HTTP Status Code
    */
-  response => {
+  (response) => {
     if (loadingInstance) {
       loadingInstance.close()
     }
@@ -60,9 +60,9 @@ service.interceptors.response.use(
           confirmButtonText: '重新登录',
           type: 'warning'
         }).then(() => {
-          localStorage.removeItem('token');
-          localStorage.removeItem('accountId');
-          router.push("/login");
+          localStorage.removeItem('token')
+          localStorage.removeItem('accountId')
+          router.push('/login')
         })
       } else {
         ElMessage({
@@ -77,7 +77,7 @@ service.interceptors.response.use(
       return res
     }
   },
-  error => {
+  (error) => {
     if (loadingInstance) {
       loadingInstance.close()
     }

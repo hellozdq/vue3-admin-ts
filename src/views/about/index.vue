@@ -1,30 +1,30 @@
 <template>
-    <div class="container">
-        <div class="title">关于</div>
-        <el-button type="primary" v-if="roles[0]==='admin'||roles.includes(10101)">新增</el-button>
-        <el-button type="primary" v-if="roles[0]==='admin'||roles.includes(10102)">修改</el-button>
-        <el-button type="primary" v-if="roles[0]==='admin'||roles.includes(10103)">删除</el-button>
-    </div>
+  <div class="container">
+    <div class="title">关于</div>
+    <el-button type="primary" v-if="roles[0] === 'admin' || roles.includes(10101)">新增</el-button>
+    <el-button type="primary" v-if="roles[0] === 'admin' || roles.includes(10102)">修改</el-button>
+    <el-button type="primary" v-if="roles[0] === 'admin' || roles.includes(10103)">删除</el-button>
+  </div>
 </template>
 
 <script lang="ts">
-import {  defineComponent, ref } from 'vue'
-import { useStore } from 'vuex'
-export default defineComponent({
-    name: "About",
+  import { defineComponent, ref } from 'vue'
+  import { useStore } from 'vuex'
+  export default defineComponent({
+    name: 'About',
     setup(props) {
-        const store = useStore();
-        const roles = ref(store.state.user.roles);
-        return { roles };
+      const store = useStore()
+      const roles = ref(store.state.user.roles)
+      return { roles }
     }
-})
+  })
 </script>
 
 <style lang="scss" scoped>
-.container{
-    .title{
-        font-size: 24px;
-        margin-bottom: 20px;
+  .container {
+    .title {
+      font-size: 24px;
+      margin-bottom: 20px;
     }
-}
+  }
 </style>

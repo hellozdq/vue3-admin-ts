@@ -1,7 +1,7 @@
 import { createStore, Store } from 'vuex'
 
 // 获取文件名 自动读取modules文件
-const modulesFiles = import.meta.globEager("./modules/*.ts")
+const modulesFiles = import.meta.globEager('./modules/*.ts')
 
 const modules = Object.keys(modulesFiles).reduce((modules, modulePath) => {
   const moduleName = modulePath.replace(/^\.\/modules\/(.*)\.\w+$/, '$1')
@@ -10,8 +10,7 @@ const modules = Object.keys(modulesFiles).reduce((modules, modulePath) => {
   return modules
 }, {})
 
-
-const store:Store<any> = createStore({
+const store: Store<any> = createStore({
   modules
 })
 export default store
