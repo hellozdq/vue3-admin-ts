@@ -1,5 +1,9 @@
 ## vue3 全局桶 + typescript + elementui 搭建后台管理系统
 
+![avatar](/src/assets/images/page.jpg)
+
+![avatar](/src/assets/images/logo_page.jpg)
+
 ### 拉取使用
 
 1. git clone https://github.com/hellozdq/vue3-admin-ts.git 拉取项目
@@ -297,7 +301,7 @@ ts 中访问 process is not defined
 1. 浏览器无法使用 requirst\path.resolve(暂时写了个方法 connectPath 替代)
 2. eslint 用不了、 引入 scss 到 js 用不了
 3. axios AxiosRequestConfig 不存在 loading
-4. el-dialog 使用指令失效
+4. el-dialog 使用指令失效(已修改，在 el-dilaog 外加一层ｄｉｖ)
 
 5. const formRef = ref<any>(null); ref 的 typesrcipt 类型 formRef.value.validate (property) Ref<HTMLElement | null>.value: HTMLElement | null Object is possibly 'null'.
 
