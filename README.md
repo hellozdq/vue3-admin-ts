@@ -2,7 +2,7 @@
 
 ![avatar](/src/assets/images/page.jpg)
 
-![avatar](/src/assets/images/logo_page.jpg)
+![avatar](/src/assets/images/login_page.jpg)
 
 ### 拉取使用
 
