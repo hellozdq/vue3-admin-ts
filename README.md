@@ -1,8 +1,8 @@
 ## vue3 全局桶 + typescript + elementui 搭建后台管理系统
 
-![avatar](/src/assets/images/page.jpg)
-
 ![avatar](/src/assets/images/login_page.jpg)
+
+![avatar](/src/assets/images/page.jpg)
 
 ### 拉取使用
 
