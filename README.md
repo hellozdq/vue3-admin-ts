@@ -259,18 +259,25 @@ https://blog.csdn.net/h_mo_liang/article/details/113850297 yarn add --dev eslint
 
 ### 添加 加密
 
+```
 yarn add jsencrypt --dep
+```
 
 ### 设置变量
 
 [https://blog.csdn.net/chendf\_\_/article/details/115676683](https://blog.csdn.net/chendf__/article/details/115676683)
 
-# 安装 cross-env
+```
+npm i dotenv -D
+```
 
-yarn add cross-env dotenv -D 根目录创建 .env.development .env.production
+#### 安装 cross-env
 
 ```
+yarn add cross-env dotenv -D 根目录创建 .env.development .env.production
+
 vite.config.js
+
 const fs = require('fs');
 
 try {
@@ -285,6 +292,33 @@ try {
 }
 
 ts 中访问 process is not defined
+```
+
+### 设置变量 2
+
+```
+替换前面的设置变量
+卸载设置变量1中的dotenv 和cross-env
+yarn remove cross-env dotenv
+```
+
+<https://blog.csdn.net/hbiao68/article/details/108974194>
+
+```
+console.log(import.meta.env.VITE_APP_CONTEXT)
+```
+
+<http://events.jianshu.io/p/4973bd983e96>
+
+```
+vue3 在vite.config中无法使用import.meta.env.*的解决办法
+import { loadEnv } from 'vite'
+export default ({ mode }) => {
+  return defineConfig({
+          plugins: [vue()],
+          base:loadEnv(mode, process.cwd()).VITE_APP_NAME
+      })
+}
 ```
 
 ### 路由 404

@@ -5,12 +5,12 @@ import router from '@/router'
 import { getToken } from './auth'
 
 // console.log(process.env);
-
+let baseUrl: any = import.meta.env.VITE_BASE_API
 // create an axios instance
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // baseURL: '/api', // url = base url + request url
-  baseURL: 'http://192.168.2.105:5000', // url = base url + request url
+  baseURL: baseUrl, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 30000 // request timeout
 })

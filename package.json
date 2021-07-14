@@ -2,7 +2,7 @@
   "name": "vue3-admin-ts",
   "version": "0.0.0",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development vite",
+    "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
   },
@@ -20,8 +20,6 @@
     "@typescript-eslint/parser": "^4.28.0",
     "@vitejs/plugin-vue": "^1.2.2",
     "@vue/compiler-sfc": "^3.0.5",
-    "cross-env": "^7.0.3",
-    "dotenv": "^10.0.0",
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
