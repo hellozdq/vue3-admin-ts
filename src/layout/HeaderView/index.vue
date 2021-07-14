@@ -26,15 +26,12 @@
   <head-tags></head-tags>
 
   <!-- 修改密码 start -->
-  <el-dialog
-    title="修改密码"
-    v-model="dialogVisible"
-    :close-on-click-modal="false"
-    width="500px"
-    v-if="dialogVisible"
-  >
-    <edit-pass v-model:dialogVisible="dialogVisible" :userId="1"></edit-pass>
-  </el-dialog>
+  <div v-dialogdrag v-if="dialogVisible">
+    <el-dialog title="修改密码" v-model="dialogVisible" :close-on-click-modal="false" width="500px">
+      <edit-pass v-model:dialogVisible="dialogVisible" :userId="1"></edit-pass>
+    </el-dialog>
+  </div>
+
   <!-- 修改密码 end -->
 </template>
 

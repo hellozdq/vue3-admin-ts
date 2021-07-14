@@ -47,35 +47,37 @@
     ></Pagination>
 
     <!-- 权限 start -->
-    <el-dialog
-      title="权限"
-      v-model="dialogRolesVisible"
-      :close-on-click-modal="false"
-      width="600px"
-      v-if="dialogRolesVisible"
-    >
-      <roles-form
-        v-model:dialogRolesVisible="dialogRolesVisible"
-        :userForm="userForm"
-        @onSearch="onSearch"
-      ></roles-form>
-    </el-dialog>
+    <div v-dialogdrag v-if="dialogRolesVisible">
+      <el-dialog
+        title="权限"
+        v-model="dialogRolesVisible"
+        :close-on-click-modal="false"
+        width="600px"
+      >
+        <roles-form
+          v-model:dialogRolesVisible="dialogRolesVisible"
+          :userForm="userForm"
+          @onSearch="onSearch"
+        ></roles-form>
+      </el-dialog>
+    </div>
     <!-- 权限 end -->
 
     <!-- 编辑 start -->
-    <el-dialog
-      title="编辑"
-      v-model="dialogEditVisible"
-      :close-on-click-modal="false"
-      width="500px"
-      v-if="dialogEditVisible"
-    >
-      <edit-form
-        v-model:dialogEditVisible="dialogEditVisible"
-        :userForm="userForm"
-        @onSearch="onSearch"
-      ></edit-form>
-    </el-dialog>
+    <div v-dialogdrag v-if="dialogEditVisible">
+      <el-dialog
+        title="编辑"
+        v-model="dialogEditVisible"
+        :close-on-click-modal="false"
+        width="500px"
+      >
+        <edit-form
+          v-model:dialogEditVisible="dialogEditVisible"
+          :userForm="userForm"
+          @onSearch="onSearch"
+        ></edit-form>
+      </el-dialog>
+    </div>
     <!-- 编辑 end -->
   </div>
 </template>

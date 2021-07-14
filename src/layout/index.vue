@@ -64,7 +64,7 @@
       padding: 0 10px;
       &_main {
         background: #f5f5f5;
-        padding: 15px;
+        padding: 10px;
         box-sizing: border-box;
         flex: 1;
       }
