@@ -1,83 +1,73 @@
-// v-dialogDrag: 弹窗拖拽属性 （重点！！！ 给模态框添加这个属性模态框就能拖拽了）
-export default {
-  // 属性名称dialogDrag，前面加v- 使用
-  beforeMount(el, binding, vnode, oldVnode) {
-    console.log('---------------------------11')
-    console.log('el------------------')
-    console.log('el')
-    console.log(el)
-    return
-    const dialogHeaderEl = el.querySelector('.el-dialog__header')
-    const dragDom = el.querySelector('.el-dialog')
-    // dialogHeaderEl.style.cursor = 'move';
-    dialogHeaderEl.style.cssText += ';cursor:move;'
-    dragDom.style.cssText += ';top:0px;'
-
-    // 获取原有属性 ie dom元素.currentStyle 火狐谷歌 window.getComputedStyle(dom元素, null);
-    const sty = (function () {
-      if (window.document.currentStyle) {
-        return (dom, attr) => dom.currentStyle[attr]
-      } else {
-        return (dom, attr) => getComputedStyle(dom, false)[attr]
-      }
-    })()
-
-    dialogHeaderEl.onmousedown = (e) => {
-      // 鼠标按下，计算当前元素距离可视区的距离
-      const disX = e.clientX - dialogHeaderEl.offsetLeft
-      const disY = e.clientY - dialogHeaderEl.offsetTop
-
-      const screenWidth = document.body.clientWidth // body当前宽度
-      const screenHeight = document.documentElement.clientHeight // 可见区域高度(应为body高度，可某些环境下无法获取)
-
-      const dragDomWidth = dragDom.offsetWidth // 对话框宽度
-      const dragDomheight = dragDom.offsetHeight // 对话框高度
-
-      const minDragDomLeft = dragDom.offsetLeft
-      const maxDragDomLeft = screenWidth - dragDom.offsetLeft - dragDomWidth
-
-      const minDragDomTop = dragDom.offsetTop
-      const maxDragDomTop = screenHeight - dragDom.offsetTop - dragDomheight
-
-      // 获取到的值带px 正则匹配替换
-      let styL = sty(dragDom, 'left')
-      let styT = sty(dragDom, 'top')
-
-      // 注意在ie中 第一次获取到的值为组件自带50% 移动之后赋值为px
-      if (styL.includes('%')) {
-        styL = +document.body.clientWidth * (+styL.replace(/\%/g, '') / 100)
-        styT = +document.body.clientHeight * (+styT.replace(/\%/g, '') / 100)
-      } else {
-        styL = +styL.replace(/\px/g, '')
-        styT = +styT.replace(/\px/g, '')
+const dialogDrag = (app, options) => {
+  app.directive('dialogdrag', {
+    // 渲染完毕
+    mounted(el, binding) {
+      // binding.arg
+      // binding.value
+      // 可视窗口的宽度
+      const clientWidth = document.documentElement.clientWidth
+      // 可视窗口的高度
+      const clientHeight = document.documentElement.clientHeight
+      // 记录坐标
+      let domset = {
+        x: clientWidth / 4, // 默认width 50%
+        y: (clientHeight * 15) / 100 // 根据 15vh 计算
       }
 
-      document.onmousemove = function (e) {
-        // 通过事件委托，计算移动的距离
-        let left = e.clientX - disX
-        let top = e.clientY - disY
+      // 弹窗的容器
+      console.log(el)
+      console.log(el.firstElementChild)
+      const domDrag = el.firstElementChild.firstElementChild
+      // 重新设置上、左距离
+      domDrag.style.marginTop = domset.y + 'px'
+      domDrag.style.marginLeft = domset.x + 'px'
 
-        // 边界处理
-        if (-left > minDragDomLeft) {
-          left = -minDragDomLeft
-        } else if (left > maxDragDomLeft) {
-          left = maxDragDomLeft
+      // 记录拖拽开始的光标坐标，0 表示没有拖拽
+      let start = { x: 0, y: 0 }
+      // 移动中记录偏移量
+      let move = { x: 0, y: 0 }
+
+      // 鼠标按下，开始拖拽
+      domDrag.onmousedown = (e) => {
+        // 判断对话框是否重新打开
+        if (domDrag.style.marginTop === '15vh') {
+          // 重新打开，设置 domset.y  top
+          domset.y = (clientHeight * 15) / 100
         }
-
-        if (-top > minDragDomTop) {
-          top = -minDragDomTop
-        } else if (top > maxDragDomTop) {
-          top = maxDragDomTop
-        }
-
-        // 移动当前元素
-        dragDom.style.cssText += `;left:${left + styL}px;top:${top + styT}px;`
+        start.x = e.clientX
+        start.y = e.clientY
+        domDrag.style.cursor = 'move' // 改变光标形状
       }
 
-      document.onmouseup = function (e) {
-        document.onmousemove = null
-        document.onmouseup = null
+      // 鼠标移动，实时跟踪
+      domDrag.onmousemove = (e) => {
+        if (start.x === 0) {
+          // 不是拖拽状态
+          return
+        }
+        move.x = e.clientX - start.x
+        move.y = e.clientY - start.y
+
+        // 初始位置 + 拖拽距离
+        domDrag.style.marginLeft = domset.x + move.x + 'px'
+        domDrag.style.marginTop = domset.y + move.y + 'px'
+      }
+      // 鼠标抬起，结束拖拽
+      domDrag.onmouseup = (e) => {
+        move.x = e.clientX - start.x
+        move.y = e.clientY - start.y
+
+        // 记录新坐标，作为下次拖拽的初始位置
+        domset.x += move.x
+        domset.y += move.y
+        domDrag.style.cursor = '' // 恢复光标形状
+        domDrag.style.marginLeft = domset.x + 'px'
+        domDrag.style.marginTop = domset.y + 'px'
+        // 结束拖拽
+        start.x = 0
       }
     }
-  }
+  })
 }
+
+export default dialogDrag
