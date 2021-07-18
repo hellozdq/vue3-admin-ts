@@ -1,4 +1,9 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+
+// 添加 Router type 可选参数
+export type AppRouterRecordRaw = RouteRecordRaw & {
+  hidden?: boolean
+}
 
 const Layout = () => import('@/layout/index.vue')
 const Home = () => import('@/views/home/index.vue')
@@ -19,9 +24,9 @@ routes
 path: 路由
 componet: 组件
 name: 组件名称
+hidden：是否隐藏
 meta: 自定义属性
     title: 标题
-    hidden：是否隐藏
     icon：图标
     hiddenParent: 隐藏当前级（当只有一个子元素且为true时只显示children子级的数据）
     noShowTag: 不需要显示在tag上
@@ -33,9 +38,8 @@ export default createRouter({
     {
       path: '/redirect',
       component: Layout,
-      meta: {
-        hidden: true
-      },
+      hidden: true,
+      meta: {},
       children: [
         {
           path: '/redirect/:path*',
@@ -69,19 +73,18 @@ export default createRouter({
     {
       path: '/login',
       component: Login,
+      hidden: true,
       meta: {
-        hidden: true,
         noShowTag: true
       }
     },
     {
       path: '/:pathMatch(.*)',
       component: NotPage,
-      meta: {
-        hidden: true
-      }
+      hidden: true,
+      meta: {}
     }
-  ]
+  ] as AppRouterRecordRaw[]
 })
 
 export const asyncRouter = [UserRouter, AboutRouter, RecordRouter]
