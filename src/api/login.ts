@@ -1,9 +1,6 @@
 import request from '@/common/request'
+import { LoginForm, UpdataData } from '@/types/login'
 
-export type LoginForm = {
-  account: string
-  password: string
-}
 // 登陆
 export function toLogin(data: LoginForm) {
   return request({
@@ -22,13 +19,6 @@ export function getPublicKey() {
 }
 
 // 修改密码
-export type UpdataData = {
-  id: number
-  account?: string
-  password: string
-  newPassword: string
-  newPassword2?: string
-}
 export function updatePassword(data: UpdataData) {
   return request({
     url: '/login/updatePassword',

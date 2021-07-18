@@ -1,11 +1,5 @@
 import request from '@/common/request'
-
-export type ListForm = {
-  pageSize: number
-  pageNum: number
-  name: string
-  phone: string
-}
+import { ListForm, UpdateData, UpdateRoleQuery, userIdData } from '@/types/user'
 
 // 获取用户列表
 export function getList(data: ListForm) {
@@ -25,20 +19,12 @@ export function getRoles() {
 }
 
 // 根据用户id获取用户权限
-type userIdData = {
-  userId: number
-}
 export function getUserRoles(data: userIdData) {
   return request({
     url: '/user/rolesByUserId',
     method: 'get',
     params: data
   })
-}
-
-export type UpdateRoleQuery = {
-  userId: number
-  roles: string
 }
 
 // 修改权限
@@ -51,13 +37,6 @@ export function updateRole(data: UpdateRoleQuery) {
 }
 
 // updateUser, UpdateData
-// 修改用户
-export type UpdateData = {
-  id: number
-  name: string
-  phone: string
-}
-
 // 修改用户
 export function updateUser(data: UpdateData) {
   return request({
