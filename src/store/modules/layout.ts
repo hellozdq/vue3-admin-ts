@@ -18,6 +18,7 @@ const mutations = {
   },
   // 添加tags
   ADD_TAGVIEWS: (state: state, data: Route) => {
+    console.log(data)
     const isExist = state.tagViews.some((item: any) => {
       return item.path === data.path
     })
