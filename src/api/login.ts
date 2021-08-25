@@ -1,8 +1,7 @@
 import request from '@/common/request'
-import { LoginForm, UpdataData } from '@/types/login'
 
 // 登陆
-export function toLogin(data: LoginForm) {
+export function toLogin(data: Login.LoginForm) {
   return request({
     url: '/login',
     method: 'post',
@@ -19,7 +18,7 @@ export function getPublicKey() {
 }
 
 // 修改密码
-export function updatePassword(data: UpdataData) {
+export function updatePassword(data: Login.UpdataData) {
   return request({
     url: '/login/updatePassword',
     method: 'put',

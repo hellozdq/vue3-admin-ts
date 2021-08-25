@@ -88,7 +88,7 @@
   const RolesForm = () => import('./components/RolesForm.vue')
   const EditForm = () => import('./components/EditForm.vue')
   import Pagination from '@/components/Pagination/index.vue'
-  import { getList, ListForm, deleteUser } from '@/api/user'
+  import { getList, deleteUser } from '@/api/user'
 
   export default defineComponent({
     components: {
@@ -138,7 +138,7 @@
       }
 
       // 查询表单
-      const searchForm: ListForm = reactive({
+      const searchForm: User.ListForm = reactive({
         name: '',
         phone: '',
         pageNum: 1,
@@ -152,6 +152,7 @@
       const getPage = (data: { page: number; limit: number }) => {
         searchForm.pageNum = data.page
         searchForm.pageSize = data.limit
+        onSearch()
       }
 
       onSearch()

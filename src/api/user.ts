@@ -1,8 +1,7 @@
 import request from '@/common/request'
-import { ListForm, UpdateData, UpdateRoleQuery, userIdData } from '@/types/user'
 
 // 获取用户列表
-export function getList(data: ListForm) {
+export function getList(data: User.ListForm) {
   return request({
     url: '/user/list',
     method: 'post',
@@ -19,7 +18,7 @@ export function getRoles() {
 }
 
 // 根据用户id获取用户权限
-export function getUserRoles(data: userIdData) {
+export function getUserRoles(data: User.userIdData) {
   return request({
     url: '/user/rolesByUserId',
     method: 'get',
@@ -28,7 +27,7 @@ export function getUserRoles(data: userIdData) {
 }
 
 // 修改权限
-export function updateRole(data: UpdateRoleQuery) {
+export function updateRole(data: User.UpdateRoleQuery) {
   return request({
     url: '/user/updateRole',
     method: 'put',
@@ -38,7 +37,7 @@ export function updateRole(data: UpdateRoleQuery) {
 
 // updateUser, UpdateData
 // 修改用户
-export function updateUser(data: UpdateData) {
+export function updateUser(data: User.UpdateData) {
   return request({
     url: '/user/updateUser',
     method: 'put',

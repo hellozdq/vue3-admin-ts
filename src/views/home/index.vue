@@ -8,9 +8,7 @@
 
   export default defineComponent({
     name: 'Home',
-    setup(props) {
-      return {}
-    }
+    setup(props) {}
   })
 </script>
 

@@ -41,7 +41,7 @@
 
   import { cusLocalStorage } from '@/common'
 
-  import { toLogin, getPublicKey, LoginForm } from '@/api/login'
+  import { toLogin, getPublicKey } from '@/api/login'
 
   export default defineComponent({
     setup() {
@@ -57,7 +57,7 @@
         account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       }
-      const loginForm: LoginForm = reactive({
+      const loginForm: Login.LoginForm = reactive({
         account: '',
         password: ''
       })

@@ -13,6 +13,7 @@ const NotPage = () => import('@/views/404.vue')
 
 import UserRouter from './modules/user'
 import AboutRouter from './modules/about'
+import DatabaseRouter from './modules/database'
 import RecordRouter from './modules/record'
 
 // 首页路由
@@ -87,4 +88,4 @@ export default createRouter({
   ] as AppRouterRecordRaw[]
 })
 
-export const asyncRouter = [UserRouter, AboutRouter, RecordRouter]
+export const asyncRouter = [UserRouter, DatabaseRouter, AboutRouter, RecordRouter]
