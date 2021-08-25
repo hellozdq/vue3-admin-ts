@@ -330,16 +330,131 @@ export default ({ mode }) => {
 1. 添加依赖 yarn add --dev eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-plugin-vue @typescript-eslint/parser @typescript-eslint/eslint-plugin @typescript-eslint/no-unused-vars
 2. 根目录添加.eslintrc.js 、 .prettierrc
 
+### 修改.d.ts
+
+```
+全局引入
+declare namespace Database {
+  // 查询列表表单的参数
+  type ListForm = {
+    pageSize: number
+    pageNum: number
+    tableName: string
+  }
+}
+type全部改成这样
+
+```
+
 #### 存在的问题
 
 1. 浏览器无法使用 requirst\path.resolve(暂时写了个方法 connectPath 替代)
-2. eslint 用不了、 引入 scss 到 js 用不了
+2. eslint 用不了（已解决）、 引入 scss 到 js 用不了
 3. axios AxiosRequestConfig 不存在 loading
 4. el-dialog 使用指令失效(已修改，在 el-dilaog 外加一层ｄｉｖ)
 
 5. const formRef = ref<any>(null); ref 的 typesrcipt 类型 formRef.value.validate (property) Ref<HTMLElement | null>.value: HTMLElement | null Object is possibly 'null'.
 
 6. .ts 中访问 process process is not defined 暂时使用 any
+
+### typescript 的简单记录
+
+#### 类型兼容
+
+1. any 可以赋值给除了 never 之外的任意类型，反过来其他类型可以赋值给 any(谨慎少用)
+2. never 可以赋值给其他类型，反之不能被任何类型包括（any）赋值
+3. unknown 和 never 反过来，不能把 unknown 赋值给除了 any 之外任何类型，反过来其他类型都可以赋值给 unknown
+4. void、null、undefined void 仅可以赋值给 any 和 unknown 类型，反过来仅 any、never、undefined 可以赋值 void null、undefined 只能赋值给 any 和 unknown ，反过来其他类型除了 any 和 never 之外 都不可以赋值给 null 或 undefined
+
+```
+let isVoid: void
+let isNever: never
+let isUnknown: unknown
+let isUndefined: undefined
+let isNull: null = null
+let isAny: any
+let isNumber: number
+
+isVoid = isAny
+isVoid = isNever
+isVoid = isUndefined
+isVoid = isNumber //Type 'number' is not assignable to type 'void'.
+
+isAny = isVoid
+isUnknown = isVoid
+
+isAny = isNull
+isAny = isUndefined
+isUnknown = isNull
+isUnknown = isUndefined
+
+isNull = isAny
+isUndefined = isAny
+isNull = isNever //Type 'null' is not assignable to type 'number'
+isUndefined = isNever//Type 'undefined' is not assignable to type 'number'
+```
+
+5. enum 枚举类型 数字枚举和数字类型兼容 enum A { one } let num:number = A.one;
+
+不同枚举不兼容
+
+```
+enum A { one } enum B { one } let a: A let b: B a = b //Type 'B' is not assignable to type 'A'.Vetur(2322)
+```
+
+6. 子类型和父类型都兼容
+
+```
+interface Parent {
+  name: string
+}
+interface Child extends Parent {
+  name: string
+}
+
+let p: Parent = { name: 'a' }
+let c: Child = { name: 'b' }
+p = c
+c = p
+```
+
+7. 结构类型 如果两个类型结构一致，则互相兼容
+
+```
+class C1 {
+  name = 'a'
+}
+class C2 {
+  name = 'b'
+}
+interface P1 {
+  name: string
+}
+interface P2 {
+  name: string
+}
+
+let a1: C1 = { name: 'a1' }
+let a2: C2 = { name: 'a2' }
+let a3: P1 = { name: 'a3' }
+let a4: P2 = { name: 'a4' }
+a1 = a2
+a3 = a4
+a1 = a3
+a3 = a1
+console.log(a1)
+let f: C1 = {
+  name: 'a1',
+  id: 1//ype '{ name: string; id: number; }' is not assignable to type 'C1'.Object literal may only specify known properties, and 'id' does not exist in type 'C1'.Vetur(2322)
+}
+let c = {
+  name: 'a1',
+  id: 1
+}
+a1 = c
+```
+
+#### ts
 
 # Vue 3 + Typescript + Vite
 
