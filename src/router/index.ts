@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 // 添加 Router type 可选参数
 export type AppRouterRecordRaw = RouteRecordRaw & {
@@ -34,7 +34,7 @@ meta: 自定义属性
     roles:["admin"] //权限
 */
 export default createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes: [
     {
       path: '/redirect',

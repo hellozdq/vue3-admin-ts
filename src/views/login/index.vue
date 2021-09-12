@@ -30,6 +30,7 @@
         <el-button :loading="loading" class="btn" type="primary" @click="onLogin">登 陆</el-button>
       </el-form-item>
     </el-form>
+    <div>账号：zdq 密码：123456</div>
   </div>
 </template>
 
@@ -68,6 +69,15 @@
         if (formRef) {
           formRef.value.validate(async (valid: boolean) => {
             if (valid) {
+              router.push('/')
+              cusLocalStorage.set('token', 1)
+              cusLocalStorage.set('user', {
+                id: 'zdq',
+                userId: '1',
+                account: 'zdq',
+                name: 'zdq'
+              })
+              return
               loading.value = true
               try {
                 const { data: publicKey }: { data: string } = await getPublicKey()
