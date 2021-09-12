@@ -1,1 +1,0 @@
-import{d as e,v as r,u as n}from"./vendor.f3ea224c.js";const o=e({name:"Redirect",setup(){console.log("----------\x3e>1redirct");const e=r(),o=n();e.replace("/"+o.params.path.join("/"))}});o.render=function(e,r,n,o,t,a){return null};export default o;
