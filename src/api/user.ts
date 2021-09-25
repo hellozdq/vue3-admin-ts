@@ -2,14 +2,14 @@ import request from '@/common/request'
 
 // 获取用户列表
 export function getList(data: User.ListForm) {
-  // return request({
-  //   url: '/user/list',
-  //   method: 'post',
-  //   data
-  // })
-  return new Promise(function (resovle) {
-    resovle([])
+  return request({
+    url: '/user/list',
+    method: 'post',
+    data
   })
+  // return new Promise(function (resovle) {
+  //   resovle([])
+  // })
 }
 
 // 获取所有权限
@@ -22,12 +22,12 @@ export function getRoles() {
 
 // 根据用户id获取用户权限
 export function getUserRoles(data: User.userIdData) {
-  // return request({
-  //   url: '/user/rolesByUserId',
-  //   method: 'get',
-  //   params: data
-  // })
-  return { data: 'admin' }
+  return request({
+    url: '/user/rolesByUserId',
+    method: 'get',
+    params: data
+  })
+  // return { data: 'admin' }
 }
 
 // 修改权限

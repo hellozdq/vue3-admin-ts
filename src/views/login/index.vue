@@ -69,15 +69,15 @@
         if (formRef) {
           formRef.value.validate(async (valid: boolean) => {
             if (valid) {
-              router.push('/')
-              cusLocalStorage.set('token', 1)
-              cusLocalStorage.set('user', {
-                id: 'zdq',
-                userId: '1',
-                account: 'zdq',
-                name: 'zdq'
-              })
-              return
+              // router.push('/')
+              // cusLocalStorage.set('token', 1)
+              // cusLocalStorage.set('user', {
+              //   id: 'zdq',
+              //   userId: '1',
+              //   account: 'zdq',
+              //   name: 'zdq'
+              // })
+              // return
               loading.value = true
               try {
                 const { data: publicKey }: { data: string } = await getPublicKey()
