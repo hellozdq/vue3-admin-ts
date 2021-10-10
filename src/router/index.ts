@@ -15,6 +15,8 @@ import UserRouter from './modules/user'
 import AboutRouter from './modules/about'
 import DatabaseRouter from './modules/database'
 import RecordRouter from './modules/record'
+import CustomRouter from './modules/custom'
+import InsterestRouter from './modules/interest'
 
 // 首页路由
 const homePath = '/home'
@@ -88,4 +90,4 @@ export default createRouter({
   ] as AppRouterRecordRaw[]
 })
 
-export const asyncRouter = [UserRouter, DatabaseRouter, AboutRouter, RecordRouter]
+export const asyncRouter = [UserRouter, DatabaseRouter, AboutRouter, RecordRouter, CustomRouter,InsterestRouter]

@@ -69,7 +69,7 @@
         if (formRef) {
           formRef.value.validate(async (valid: boolean) => {
             if (valid) {
-              // router.push('/')
+              // router.push('/home')
               // cusLocalStorage.set('token', 1)
               // cusLocalStorage.set('user', {
               //   id: 'zdq',

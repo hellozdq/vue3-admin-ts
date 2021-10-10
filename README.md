@@ -346,6 +346,14 @@ type全部改成这样
 
 ```
 
+### div 转成图片
+
+```
+引入依赖 html2canvas
+
+yarn add html2canvas
+```
+
 #### 存在的问题
 
 1. 浏览器无法使用 requirst\path.resolve(暂时写了个方法 connectPath 替代)
@@ -356,6 +364,8 @@ type全部改成这样
 5. const formRef = ref<any>(null); ref 的 typesrcipt 类型 formRef.value.validate (property) Ref<HTMLElement | null>.value: HTMLElement | null Object is possibly 'null'.
 
 6. .ts 中访问 process process is not defined 暂时使用 any
+
+7. refs 定义 null 提示的问题: typescript 定义成 HTMLFormElement
 
 ### typescript 的简单记录
 

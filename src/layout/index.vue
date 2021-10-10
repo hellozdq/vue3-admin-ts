@@ -67,6 +67,7 @@
         padding: 10px;
         box-sizing: border-box;
         flex: 1;
+        overflow: auto;
       }
     }
   }

@@ -7,11 +7,12 @@ const path = require('path')
 console.log(process.env.NODE_ENV)
 
 export default ({ mode }) => {
-  console.log(loadEnv(mode, process.cwd()).VITE_BASE_API)
   return defineConfig({
-    base: './',
+    base: loadEnv(mode, process.cwd()).VITE_NODE_ENV === 'product' ? '/':'./',
     server: {
       open: '/',
+      host: '127.0.0.1',
+      port: 8080,
       proxy: {
         '/api': {
           target: 'http://localhost:5000',
